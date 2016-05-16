@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var yaml = require('node-yaml');
+var execSync = require('child_process').execSync;
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -16,6 +17,20 @@ module.exports = yeoman.Base.extend({
       swagger = yaml.readSync(this.destinationPath('spec/swagger.yaml'));
       swagger.info = swagger.info || {};
       swagger.info.contact = swagger.info.contact || {};
+    }
+
+    var remoteUrl;
+    var ghRepoName;
+    try {
+      remoteUrl = execSync('git remote -v').toString();
+    } catch (e) {
+      console.log(e);
+    }
+    var match = remoteUrl.match(
+      /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)/
+    );
+    if (match && match.length > 0) {
+      ghRepoName = match[1];
     }
 
     var prompts = [{
@@ -59,8 +74,12 @@ module.exports = yeoman.Base.extend({
       },
       type: 'input',
       name: 'repo',
-      message: 'GitHub Repository (e.g. Rebilly/RebillyAPI)',
-      default: 'upateme/updateme'
+      message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
+        chalk.yellow('? ') + 'GitHub Repository?',
+      default: ghRepoName,
+      validate: function (input) {
+        return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
+      }
     }, {
       type: 'confirm',
       name: 'samples',

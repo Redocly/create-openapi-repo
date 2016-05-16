@@ -1,4 +1,4 @@
-# <%= name %> API Spec
+# <%= name %> API Specification
 <% if (travis) { %>[![Build Status](https://travis-ci.org/<%= repo %>.svg?branch=master)](https://travis-ci.org/<%= repo %>)<% } %>
 
 ## Installing
