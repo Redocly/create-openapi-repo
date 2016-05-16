@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "bower": "^1.7.7",
+    "cors": "^2.7.1",
+    "deploy-to-gh-pages": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-connect": "^3.2.0",
+    "swagger-repo": "^1.0.0",<% if (installSwaggerUI) { %>
+    "swagger-ui": "^2.1.4",<% } %>
+    "shelljs": "^0.7.0"
+  },
+  "private": true,
+  "scripts": {
+    "deploy": "npm run build && deploy-to-gh-pages web_deploy",
+    "build": "node ./scripts/build.js",
+    "swagger": "swagger-repo",
+    "test": "swagger-repo validate",
+    "start": "gulp serve"
+  }
+}
