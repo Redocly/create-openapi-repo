@@ -22,11 +22,11 @@ module.exports = yeoman.Base.extend({
     var remoteUrl;
     var ghRepoName;
     try {
-      remoteUrl = execSync('git remote -v').toString();
+      remoteUrl = execSync('git remote -v');
     } catch (e) {
       console.log(e);
     }
-    var match = remoteUrl.match(
+    var match = remoteUrl.toString().match(
       /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)/
     );
     if (match && match.length > 0) {
