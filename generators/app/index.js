@@ -19,13 +19,11 @@ module.exports = yeoman.Base.extend({
       swagger.info.contact = swagger.info.contact || {};
     }
 
-    var remoteUrl;
+    var remoteUrl = '';
     var ghRepoName;
     try {
       remoteUrl = execSync('git remote -v');
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     var match = remoteUrl.toString().match(
       /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)/
     );
