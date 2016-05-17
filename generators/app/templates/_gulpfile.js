@@ -3,21 +3,25 @@ var connect = require('gulp-connect');
 var cors = require('cors');
 var path = require('path');
 var exec = require('child_process').exec;
+var portfinder = require('portfinder');
+portfinder.basePort = 3000;
 
 var DIST_DIR = 'web_deploy';
 var SWAGGER_UI_DIST = path.dirname(require.resolve('swagger-ui'));
 
 gulp.task('serve', ['build', 'watch'], function() {
-  connect.server({
-    root: [DIST_DIR],
-    livereload: true,
-    port: 3000<% if (installSwaggerUI) { %>,
-    middleware: function (connect, opt) {
-      return [
-        connect().use('/swagger-ui', connect.static(SWAGGER_UI_DIST)),
-        cors()
-      ]
-    }<% } %>
+  portfinder.getPort(function (err, port) {
+    connect.server({
+      root: [DIST_DIR],
+      livereload: true,
+      port: port<% if (installSwaggerUI) { %>,
+      middleware: function (connect, opt) {
+        return [
+          connect().use('/swagger-ui', connect.static(SWAGGER_UI_DIST)),
+          cors()
+        ]
+      }<% } %>
+    });
   });
 });
 

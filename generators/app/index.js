@@ -25,7 +25,7 @@ module.exports = yeoman.Base.extend({
       remoteUrl = execSync('git remote -v');
     } catch (e) {}
     var match = remoteUrl.toString().match(
-      /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)/
+      /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)\.git?/
     );
     if (match && match.length > 0) {
       ghRepoName = match[1];
@@ -35,37 +35,44 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'name',
       message: 'Your API name',
-      default: swagger.title || this.appname
+      default: swagger.title || this.appname,
+      store: true
     }, {
       type: 'input',
       name: 'description',
       message: 'Short description',
-      default: swagger.info.description || ''
+      default: swagger.info.description || '',
+      store: true
     }, {
       type: 'input',
       name: 'version',
       message: 'API version',
-      default: swagger.info.version || '1.0.0'
+      default: swagger.info.version || '1.0.0',
+      store: true
     }, {
       type: 'input',
       name: 'email',
       message: 'Contact email',
-      default: swagger.info.contact.email || this.user.git.email()
+      default: swagger.info.contact.email || this.user.git.email(),
+      store: true
     }, {
       type: 'input',
       name: 'username',
       message: 'Author name',
-      default: swagger.info.contact.name || this.user.git.name()
+      default: swagger.info.contact.name || this.user.git.name(),
+      store: true
     }, {
       type: 'input',
       name: 'redocVersion',
       message: 'ReDoc version to use (e.g. v0.9.0)',
-      default: 'latest'
+      default: 'latest',
+      store: true
     }, {
       type: 'confirm',
       name: 'travis',
       message: 'Setup CI on Travis',
-      default: true
+      default: true,
+      store: true
     }, {
       when: function (props) {
         return props.travis;
@@ -75,6 +82,7 @@ module.exports = yeoman.Base.extend({
       message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
         chalk.yellow('? ') + 'GitHub Repository?',
       default: ghRepoName,
+      store: true,
       validate: function (input) {
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
@@ -82,18 +90,19 @@ module.exports = yeoman.Base.extend({
       type: 'confirm',
       name: 'samples',
       message: 'Prepare code samples',
-      default: true
+      default: true,
+      store: true
     }, {
       type: 'confirm',
       name: 'installSwaggerUI',
       message: 'Install SwaggerUI',
-      default: true
+      default: true,
+      store: true
     }];
 
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
       this.props = props;
-      this.config.save();
     }.bind(this));
   },
 
@@ -175,6 +184,7 @@ module.exports = yeoman.Base.extend({
   },
 
   install: function () {
+    this.config.save();
     this.installDependencies({
       bower: false
     });
