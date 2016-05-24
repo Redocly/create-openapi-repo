@@ -1,9 +1,10 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var yaml = require('node-yaml');
-var execSync = require('child_process').execSync;
+const yeoman = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const yaml = require('node-yaml');
+const execSync = require('child_process').execSync;
+const fs = require('fs');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -12,12 +13,31 @@ module.exports = yeoman.Base.extend({
       'Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!'
     ));
 
+    const defaults = {
+      redocVersion: 'latest',
+      travis: true,
+      samples: true,
+      installSwaggerUI: true,
+      packageName: ''
+    };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
       swagger = yaml.readSync(this.destinationPath('spec/swagger.yaml'));
-      swagger.info = swagger.info || {};
-      swagger.info.contact = swagger.info.contact || {};
     }
+    swagger.info = swagger.info || {};
+    swagger.info.contact = swagger.info.contact || {};
+
+    defaults.name = swagger.title || this.appname;
+    defaults.description = swagger.info.description || '';
+    defaults.version = swagger.info.version || '1.0.0';
+    defaults.email = swagger.info.contact.email || this.user.git.email();
+    defaults.username = swagger.info.contact.name || this.user.git.name();
+
+    var packg = {};
+    if (this.fs.exists(this.destinationPath('package.json'))) {
+      packg = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
+    }
+    defaults.specVersion = packg && packg.version || '0.0.0';
 
     var remoteUrl = '';
     var ghRepoName;
@@ -29,50 +49,47 @@ module.exports = yeoman.Base.extend({
     );
     if (match && match.length > 0) {
       ghRepoName = match[1];
+      defaults.repo = ghRepoName;
     }
+
+    var config = this.config.getAll();
+    Object.assign(defaults, config);
 
     var prompts = [{
       type: 'input',
       name: 'name',
-      message: 'Your API name',
-      default: swagger.title || this.appname,
-      store: true
+      message: 'Your API name (without API)',
+      default: defaults.name
     }, {
       type: 'input',
       name: 'description',
       message: 'Short description',
-      default: swagger.info.description || '',
-      store: true
+      default: defaults.description
     }, {
       type: 'input',
       name: 'version',
       message: 'API version',
-      default: swagger.info.version || '1.0.0',
-      store: true
+      default: defaults.version
     }, {
       type: 'input',
       name: 'email',
       message: 'Contact email',
-      default: swagger.info.contact.email || this.user.git.email(),
-      store: true
+      default: defaults.email
     }, {
       type: 'input',
       name: 'username',
       message: 'Author name',
-      default: swagger.info.contact.name || this.user.git.name(),
-      store: true
+      default: defaults.username
     }, {
       type: 'input',
       name: 'redocVersion',
       message: 'ReDoc version to use (e.g. v0.9.0)',
-      default: 'latest',
-      store: true
+      default: defaults.redocVersion
     }, {
       type: 'confirm',
       name: 'travis',
       message: 'Setup CI on Travis',
-      default: true,
-      store: true
+      default: defaults.travis
     }, {
       when: function (props) {
         return props.travis;
@@ -81,28 +98,38 @@ module.exports = yeoman.Base.extend({
       name: 'repo',
       message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
         chalk.yellow('? ') + 'GitHub Repository?',
-      default: ghRepoName,
-      store: true,
+      default: defaults.repo,
       validate: function (input) {
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
     }, {
+      type: 'input',
+      name: 'packageName',
+      message: 'Package name',
+      default: defaults.packageName
+    }, {
+      type: 'input',
+      name: 'specVersion',
+      message: 'Spec version',
+      default: defaults.specVersion
+    }, {
       type: 'confirm',
       name: 'samples',
       message: 'Prepare code samples',
-      default: true,
-      store: true
+      default: defaults.confirm
     }, {
       type: 'confirm',
       name: 'installSwaggerUI',
       message: 'Install SwaggerUI',
-      default: true,
-      store: true
+      default: defaults.installSwaggerUI
     }];
 
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
       this.props = props;
+      console.log(props);
+      this.config.set(props);
+      this.config.save();
     }.bind(this));
   },
 

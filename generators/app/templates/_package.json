@@ -1,4 +1,6 @@
-{
+{<% if (packageName) { %>
+  "name": "<%= packageName %>",<% } %><% if (specVersion) { %>
+  "version": "<%= specVersion %>",<% } %>
   "dependencies": {
     "bower": "^1.7.7",
     "cors": "^2.7.1",
