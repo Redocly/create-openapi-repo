@@ -41,7 +41,7 @@ module.exports = yeoman.Base.extend({
     if (this.fs.exists(this.destinationPath('package.json'))) {
       packg = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
     }
-    defaults.specVersion = packg && packg.version || '0.0.0';
+    var specVersion = packg && packg.version || '0.0.0';
 
     var remoteUrl = '';
     var ghRepoName;
@@ -58,6 +58,7 @@ module.exports = yeoman.Base.extend({
 
     var config = this.config.getAll();
     Object.assign(defaults, config);
+    defaults.specVersion = specVersion;
 
     var prompts = [{
       type: 'input',
@@ -131,7 +132,6 @@ module.exports = yeoman.Base.extend({
     return this.prompt(prompts).then(function (props) {
       // To access props later use this.props.someAnswer;
       this.props = props;
-      console.log(props);
       this.config.set(props);
       this.config.save();
     }.bind(this));
