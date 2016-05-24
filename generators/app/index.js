@@ -5,6 +5,8 @@ const yosay = require('yosay');
 const yaml = require('node-yaml');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
+const updateNotifier = require('update-notifier');
+const pkg = require('../../package.json');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -12,6 +14,8 @@ module.exports = yeoman.Base.extend({
     this.log(yosay(
       'Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!'
     ));
+
+    updateNotifier({pkg}).notify();
 
     const defaults = {
       redocVersion: 'latest',

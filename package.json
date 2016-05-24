@@ -21,6 +21,7 @@
     "chalk": "^1.0.0",
     "node-yaml": "^2.0.1",
     "resolve-git-remote": "^0.2.0",
+    "update-notifier": "^0.7.0",
     "yeoman-generator": "^0.23.0",
     "yosay": "^1.0.0"
   },
