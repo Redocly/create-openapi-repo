@@ -1,6 +1,6 @@
 {
   "name": "generator-openapi-repo",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Yeoman generator for OpenAPI(fka Swagger) repo to help you share spec for your API",
   "author": {
     "name": "Roman Hotsiy",
