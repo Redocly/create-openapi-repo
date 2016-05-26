@@ -4,7 +4,7 @@
   "dependencies": {
     "bower": "^1.7.7",
     "cors": "^2.7.1",
-    "deploy-to-gh-pages": "^1.0.0",
+    "deploy-to-gh-pages": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-connect": "^3.2.0",
     "portfinder": "^1.0.3",
@@ -14,10 +14,11 @@
   },
   "private": true,
   "scripts": {
-    "deploy": "npm run build && deploy-to-gh-pages web_deploy",
+    "deploy": "npm run build && deploy-to-gh-pages <% if (branchPreview) { %>--update <% } %>web_deploy",
     "build": "node ./scripts/build.js",
     "swagger": "swagger-repo",
     "test": "swagger-repo validate",
-    "start": "gulp serve"
+    "start": "gulp serve"<% if (branchPreview) { %>,
+    "deploy-branch": "node ./scripts/deploy-branch"<% } %>
   }
 }

@@ -2,8 +2,14 @@ language: node_js
 node_js:
   - "node"
 deploy:
-  skip_cleanup: true
-  provider: script
-  script: npm run deploy
-  on:
-    branch: master
+  - skip_cleanup: true
+    provider: script
+    script: npm run deploy
+    on:
+      branch: master<% if (branchPreview) { %>
+  - skip_cleanup: true
+    provider: script
+    script: npm run deploy-branch
+    on:
+      all_branches: true
+      condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'<% } %>

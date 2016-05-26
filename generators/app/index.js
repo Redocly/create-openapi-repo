@@ -22,7 +22,8 @@ module.exports = yeoman.Base.extend({
       travis: true,
       samples: true,
       installSwaggerUI: true,
-      packageName: ''
+      packageName: '',
+      branchPreview: false
     };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
@@ -108,6 +109,14 @@ module.exports = yeoman.Base.extend({
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
     }, {
+      when: function (props) {
+        return props.travis;
+      },
+      type: 'confirm',
+      name: 'branchPreview',
+      message: 'Do you need "preview branch" functionality for ReDoc?',
+      default: defaults.branchPreview
+    }, {
       type: 'input',
       name: 'packageName',
       message: 'Package name',
@@ -134,6 +143,9 @@ module.exports = yeoman.Base.extend({
       this.props = props;
       this.config.set(props);
       this.config.save();
+
+      this.props.ghRepoUser = this.props.repo.split('/')[0];
+      this.props.ghRepoName = this.props.repo.split('/')[1];
     }.bind(this));
   },
 
@@ -158,9 +170,9 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('README.md'), this.props
       );
       if (this.props.travis) {
-        this.fs.copy(
+        this.fs.copyTpl(
           this.templatePath('_.travis.yml'),
-          this.destinationPath('.travis.yml')
+          this.destinationPath('.travis.yml'), this.props
         );
       }
     },
@@ -173,6 +185,14 @@ module.exports = yeoman.Base.extend({
         this.templatePath('_scripts/build.js'),
         this.destinationPath('scripts/build.js')
       );
+
+      if (this.props.branchPreview) {
+        this.fs.copy(
+          this.templatePath('_scripts/deploy-branch.js'),
+          this.destinationPath('scripts/deploy-branch.js')
+        );
+      }
+      // delete old build.sh
       this.fs.delete(this.destinationPath('scripts/build.sh'));
     },
     web: function () {
@@ -183,8 +203,10 @@ module.exports = yeoman.Base.extend({
     },
     mainswagger: function () {
       if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
+        console.log('EXIST, exiting');
         return;
       }
+      console.log(this.destinationPath('spec/swagger.yaml') + ' doesn\'t exist');
       this.fs.copyTpl(
         this.templatePath('_spec/swagger.yaml'),
         this.destinationPath('spec/swagger.yaml'), this.props
