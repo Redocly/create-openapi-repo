@@ -1,6 +1,14 @@
 # generator-openapi-repo [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Yeoman generator for OpenAPI(fka Swagger) repo to help you share spec for your API
 
+## Features
+This generator helps to create GitHub repo with the following features:
+ - Possibility to split big Swagger spec into smaller files and bundle it for deployment
+ - continious integration/deployment on Travis
+ - Code samples as separate files
+ - Swagger spec is validated after each commit
+ - Swagger spec + ReDoc deployed to Github Pages(you can use custom domain)
+
 ## Installation
 
 First, install [Yeoman](http://yeoman.io) and generator-openapi-repo using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
