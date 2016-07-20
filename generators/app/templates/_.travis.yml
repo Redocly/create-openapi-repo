@@ -6,10 +6,10 @@ deploy:
     provider: script
     script: npm run deploy
     on:
-      branch: master<% if (branchPreview) { %>
+      branch: master
   - skip_cleanup: true
     provider: script
     script: npm run deploy-branch
     on:
       all_branches: true
-      condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'<% } %>
+      condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'

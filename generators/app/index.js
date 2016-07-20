@@ -21,8 +21,7 @@ module.exports = yeoman.Base.extend({
       redocVersion: 'latest',
       travis: true,
       samples: true,
-      installSwaggerUI: true,
-      branchPreview: false
+      installSwaggerUI: true
     };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
@@ -105,14 +104,6 @@ module.exports = yeoman.Base.extend({
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
     }, {
-      when: function (props) {
-        return props.travis;
-      },
-      type: 'confirm',
-      name: 'branchPreview',
-      message: 'Do you need "preview branch" functionality for ReDoc?',
-      default: defaults.branchPreview
-    }, {
       type: 'confirm',
       name: 'samples',
       message: 'Prepare code samples',
@@ -172,7 +163,7 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('scripts/build.js')
       );
 
-      if (this.props.branchPreview) {
+      if (this.props.travis) {
         this.fs.copy(
           this.templatePath('_scripts/deploy-branch.js'),
           this.destinationPath('scripts/deploy-branch.js')
