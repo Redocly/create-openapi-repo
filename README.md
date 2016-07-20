@@ -11,27 +11,26 @@ This generator helps to create GitHub repo with the following features:
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-openapi-repo using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+We assume you already have [node.js](https://nodejs.org/) installed.
 
+First, install [Yeoman](http://yeoman.io) and `generator-openapi-repo`:
 ```bash
 npm install -g yo
 npm install -g generator-openapi-repo
 ```
-
-Then generate your new project:
-
+Then [create GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI spec will live.
+[Clone your repo](https://help.github.com/articles/cloning-a-repository/) and execute the following command inside it:
 ```bash
 yo openapi-repo
 ```
+Commit and push your changes to the GitHub and follow instruction from `README.md` of you newly created repo.
 
 ## Updating existing project
   - First make sure you have committed everything or have a backup
   - just run `yo openapi-repo` over the project again
   - `yo` will ask you for each file if you want to overwrite
   - for those files you haven't edited, just say yes
-  - for the other ones, type d for diff and see what's changed
-
-
+  - for the other ones, type `d` for diff and see what's changed
 
 [npm-image]: https://badge.fury.io/js/generator-openapi-repo.svg
 [npm-url]: https://npmjs.org/package/generator-openapi-repo
