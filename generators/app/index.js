@@ -23,7 +23,7 @@ module.exports = yeoman.Base.extend({
       travis: true,
       samples: true,
       installSwaggerUI: true,
-      npmVersion = '0.0.1'
+      npmVersion: '0.0.1'
     };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
