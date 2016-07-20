@@ -6,6 +6,7 @@ const yaml = require('node-yaml');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const updateNotifier = require('update-notifier');
+const gitUrlParse = require("git-url-parse");
 const pkg = require('../../package.json');
 
 module.exports = yeoman.Base.extend({
@@ -21,7 +22,8 @@ module.exports = yeoman.Base.extend({
       redocVersion: 'latest',
       travis: true,
       samples: true,
-      installSwaggerUI: true
+      installSwaggerUI: true,
+      npmVersion = '0.0.1'
     };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
@@ -36,22 +38,17 @@ module.exports = yeoman.Base.extend({
     defaults.email = swagger.info.contact.email || this.user.git.email();
     defaults.username = swagger.info.contact.name || this.user.git.name();
 
-    defaults.specVersion = '0.0.1';
     if (this.fs.exists(this.destinationPath('package.json'))) {
       var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
-      defaults.specVersion = npmPackage.version;
+      defaults.npmVersion = npmPackage.version;
     }
 
-    var remoteUrl = '';
     try {
-      remoteUrl = execSync('git remote -v');
+      var remoteUrl = execSync('git config --get remote.origin.url').toString();
+      var parsedUrl = gitUrlParse(remoteUrl.trim());
+      if (parsedUrl.owner && parsedUrl.name)
+        defaults.repo = parsedUrl.owner + '/' + parsedUrl.name;
     } catch (e) {}
-    var match = remoteUrl.toString().match(
-      /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)\.git?/
-    );
-    if (match && match.length > 0) {
-      defaults.repo = match[1];
-    }
 
     var config = this.config.getAll();
     Object.assign(defaults, config);
