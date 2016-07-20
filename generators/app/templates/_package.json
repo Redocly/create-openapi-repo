@@ -1,6 +1,6 @@
-{<% if (packageName) { %>
-  "name": "<%= packageName %>",<% } %><% if (specVersion) { %>
-  "version": "<%= specVersion %>",<% } %>
+{
+  "name": "<%= name %>-openapi-spec",
+  "version": "<%= npmVersion %>",
   "dependencies": {
     "bower": "^1.7.7",
     "cors": "^2.7.1",

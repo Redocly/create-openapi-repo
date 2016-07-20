@@ -22,7 +22,6 @@ module.exports = yeoman.Base.extend({
       travis: true,
       samples: true,
       installSwaggerUI: true,
-      packageName: '',
       branchPreview: false
     };
     var swagger = {};
@@ -38,14 +37,13 @@ module.exports = yeoman.Base.extend({
     defaults.email = swagger.info.contact.email || this.user.git.email();
     defaults.username = swagger.info.contact.name || this.user.git.name();
 
-    var packg = {};
+    defaults.specVersion = '0.0.1';
     if (this.fs.exists(this.destinationPath('package.json'))) {
-      packg = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
+      var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
+      defaults.specVersion = npmPackage.version;
     }
-    var specVersion = packg && packg.version || '0.0.0';
 
     var remoteUrl = '';
-    var ghRepoName;
     try {
       remoteUrl = execSync('git remote -v');
     } catch (e) {}
@@ -53,13 +51,11 @@ module.exports = yeoman.Base.extend({
       /origin\s+(?:git@github\.com:|(?:https?|git):\/\/(?:.+@)?github\.com\/)(\S+)\.git?/
     );
     if (match && match.length > 0) {
-      ghRepoName = match[1];
-      defaults.repo = ghRepoName;
+      defaults.repo = match[1];
     }
 
     var config = this.config.getAll();
     Object.assign(defaults, config);
-    defaults.specVersion = specVersion;
 
     var prompts = [{
       type: 'input',
@@ -116,16 +112,6 @@ module.exports = yeoman.Base.extend({
       name: 'branchPreview',
       message: 'Do you need "preview branch" functionality for ReDoc?',
       default: defaults.branchPreview
-    }, {
-      type: 'input',
-      name: 'packageName',
-      message: 'Package name',
-      default: defaults.packageName
-    }, {
-      type: 'input',
-      name: 'specVersion',
-      message: 'Spec version',
-      default: defaults.specVersion
     }, {
       type: 'confirm',
       name: 'samples',
