@@ -120,6 +120,11 @@ module.exports = yeoman.Base.extend({
 
       this.props.ghRepoUser = this.props.repo.split('/')[0];
       this.props.ghRepoName = this.props.repo.split('/')[1];
+
+      var ghPagesBaseUrl = this.props.ghRepoUser + '.github.io';
+      if (this.props.ghRepoName !== ghPagesBaseUrl)
+        ghPagesBaseUrl += '/' + this.props.ghRepoName;
+      this.props.ghPagesBaseUrl = 'https://' + ghPagesBaseUrl + '/'
     }.bind(this));
   },
 
