@@ -20,7 +20,6 @@ module.exports = yeoman.Base.extend({
 
     const defaults = {
       redocVersion: 'latest',
-      travis: true,
       samples: true,
       installSwaggerUI: true,
       npmVersion: '0.0.1'
@@ -65,33 +64,10 @@ module.exports = yeoman.Base.extend({
       default: defaults.description
     }, {
       type: 'input',
-      name: 'version',
-      message: 'API version',
-      default: defaults.version
-    }, {
-      type: 'input',
-      name: 'email',
-      message: 'Contact email',
-      default: defaults.email
-    }, {
-      type: 'input',
-      name: 'username',
-      message: 'Author name',
-      default: defaults.username
-    }, {
-      type: 'input',
       name: 'redocVersion',
       message: 'ReDoc version to use (e.g. v0.9.0)',
       default: defaults.redocVersion
     }, {
-      type: 'confirm',
-      name: 'travis',
-      message: 'Setup CI on Travis',
-      default: defaults.travis
-    }, {
-      when: function (props) {
-        return props.travis;
-      },
       type: 'input',
       name: 'repo',
       message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
@@ -148,12 +124,10 @@ module.exports = yeoman.Base.extend({
         this.templatePath('_README.md'),
         this.destinationPath('README.md'), this.props
       );
-      if (this.props.travis) {
-        this.fs.copyTpl(
-          this.templatePath('_.travis.yml'),
-          this.destinationPath('.travis.yml'), this.props
-        );
-      }
+      this.fs.copyTpl(
+        this.templatePath('_.travis.yml'),
+        this.destinationPath('.travis.yml'), this.props
+      );
     },
     scripts: function () {
       this.fs.copyTpl(

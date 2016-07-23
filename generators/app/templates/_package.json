@@ -14,11 +14,11 @@
   },
   "private": true,
   "scripts": {
-    "deploy": "npm run build && deploy-to-gh-pages <% if (branchPreview) { %>--update <% } %>web_deploy",
+    "deploy": "npm run build && deploy-to-gh-pages --update web_deploy",
     "build": "node ./scripts/build.js",
     "swagger": "swagger-repo",
     "test": "swagger-repo validate",
-    "start": "gulp serve"<% if (branchPreview) { %>,
-    "deploy-branch": "node ./scripts/deploy-branch"<% } %>
+    "start": "gulp serve",
+    "deploy-branch": "node ./scripts/deploy-branch"
   }
 }
