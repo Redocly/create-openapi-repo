@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
+    "git-url-parse": "^6.0.5",
     "node-yaml": "^2.0.1",
     "resolve-git-remote": "^0.2.0",
     "update-notifier": "^1.0.2",
