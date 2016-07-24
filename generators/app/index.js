@@ -21,8 +21,7 @@ module.exports = yeoman.Base.extend({
     const defaults = {
       redocVersion: 'latest',
       samples: true,
-      installSwaggerUI: true,
-      npmVersion: '0.0.1'
+      installSwaggerUI: true
     };
     var swagger = {};
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
@@ -33,14 +32,6 @@ module.exports = yeoman.Base.extend({
 
     defaults.name = swagger.title || this.appname;
     defaults.description = swagger.info.description || '';
-    defaults.version = swagger.info.version || '1.0.0';
-    defaults.email = swagger.info.contact.email || this.user.git.email();
-    defaults.username = swagger.info.contact.name || this.user.git.name();
-
-    if (this.fs.exists(this.destinationPath('package.json'))) {
-      var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
-      defaults.npmVersion = npmPackage.version;
-    }
 
     try {
       var remoteUrl = execSync('git config --get remote.origin.url').toString();
@@ -96,6 +87,13 @@ module.exports = yeoman.Base.extend({
 
       this.props.ghRepoUser = this.props.repo.split('/')[0];
       this.props.ghRepoName = this.props.repo.split('/')[1];
+
+      this.props.npmVersion = '0.0.1';
+      if (this.fs.exists(this.destinationPath('package.json'))) {
+        var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
+        if (npmPackage.version)
+          this.props.npmVersion = npmPackage.version;
+      }
 
       var ghPagesBaseUrl = this.props.ghRepoUser + '.github.io';
       if (this.props.ghRepoName !== ghPagesBaseUrl)
