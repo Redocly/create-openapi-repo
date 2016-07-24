@@ -4,10 +4,11 @@
 ## Post-generate steps
 
 1. Setup [Travis](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI)(**note**: you already have `.travis.yml` file).
-2. Make a test commit to trigger CI. For example
-3. If you setup everything right you <%= ghPagesBaseUrl %> will lead to your new docs
+2. You need to [create access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) and when you will be presented with `Select scopes` section you need to check `public_repo`. Than use token value as value of  [Travis enviroment variable](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings) named `GH_TOKEN`.
+2. Make a test commit to trigger CI: `git commit --allow-empty -m "Test Travis CI" && git push`
+3. If you setup everything right than <%= ghPagesBaseUrl %> will lead to your new docs.
 4. [Optional] You can setup [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)(just create `web/CNAME` file)
-5. Start writing/editing your OpenAPI spec and this [tutorial](https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-2-the-basics/) is a good starting point. 
+5. Start writing/editing your OpenAPI spec and this [tutorial](https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-2-the-basics/) is a good starting point.
 6. [Optional] If you documenting public API please consider adding it into [APIs.guru](https://APIs.guru) directory using [this form](https://apis.guru/add-api/).
 7. Delete this section :smile:
 
