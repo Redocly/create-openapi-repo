@@ -24,6 +24,7 @@ Then [create GitHub repo](https://help.github.com/articles/create-a-repo/#create
 yo openapi-repo
 ```
 Commit and push your changes to the GitHub and follow instruction from `README.md` of you newly created repo.
+**Note**: don't forget to commit `.yo-rc.json` file, it contains all answers gave to yeoman so they are reused during updated procedure.
 
 ## Updating existing project
   - First make sure you have committed everything or have a backup
