@@ -7,6 +7,7 @@ const execSync = require('child_process').execSync;
 const fs = require('fs');
 const updateNotifier = require('update-notifier');
 const gitUrlParse = require("git-url-parse");
+const slug = require('slug');
 const pkg = require('../../package.json');
 
 module.exports = yeoman.Base.extend({
@@ -89,10 +90,13 @@ module.exports = yeoman.Base.extend({
       this.props.ghRepoName = this.props.repo.split('/')[1];
 
       this.props.npmVersion = '0.0.1';
+      this.props.npmName = slug(this.props.name) + '-openapi-spec';
       if (this.fs.exists(this.destinationPath('package.json'))) {
         var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
         if (npmPackage.version)
           this.props.npmVersion = npmPackage.version;
+        if (npmPackage.name)
+          this.props.npmName = npmPackage.name;
       }
 
       var ghPagesBaseUrl = this.props.ghRepoUser + '.github.io';
