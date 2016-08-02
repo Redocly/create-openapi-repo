@@ -72,7 +72,7 @@ module.exports = yeoman.Base.extend({
       type: 'confirm',
       name: 'samples',
       message: 'Prepare code samples',
-      default: defaults.confirm
+      default: defaults.samples
     }, {
       type: 'confirm',
       name: 'installSwaggerUI',
@@ -158,10 +158,8 @@ module.exports = yeoman.Base.extend({
     },
     mainswagger: function () {
       if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
-        console.log('EXIST, exiting');
         return;
       }
-      console.log(this.destinationPath('spec/swagger.yaml') + ' doesn\'t exist');
       this.fs.copyTpl(
         this.templatePath('_spec/swagger.yaml'),
         this.destinationPath('spec/swagger.yaml'), this.props
