@@ -22,6 +22,14 @@ function getCurrentGitHubRepo() {
   return undefined;
 }
 
+function getGhPagesBaseUrl(user, repo) {
+  // TODO: support CNAME
+  var url = user + '.github.io';
+  if (repo !== url)
+    url += '/' + repo;
+  return 'https://' + url + '/';
+}
+
 module.exports = yeoman.Base.extend({
   prompting: function () {
     // Have Yeoman greet the user.
@@ -97,10 +105,7 @@ module.exports = yeoman.Base.extend({
           this.props.npmName = npmPackage.name;
       }
 
-      var ghPagesBaseUrl = this.props.ghRepoUser + '.github.io';
-      if (this.props.ghRepoName !== ghPagesBaseUrl)
-        ghPagesBaseUrl += '/' + this.props.ghRepoName;
-      this.props.ghPagesBaseUrl = 'https://' + ghPagesBaseUrl + '/'
+      this.props.ghPagesBaseUrl = getGhPagesBaseUrl(this.props.ghRepoUser, this.props.ghRepoName);
     }.bind(this));
   },
 
