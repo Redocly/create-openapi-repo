@@ -20,6 +20,7 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "git-url-parse": "^6.0.5",
+    "lodash": "^4.14.1",
     "node-yaml": "^2.0.1",
     "resolve-git-remote": "^0.2.0",
     "slug": "^0.9.1",

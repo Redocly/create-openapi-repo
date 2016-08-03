@@ -1,4 +1,6 @@
 'use strict';
+
+const _ = require('lodash');
 const yeoman = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
@@ -9,6 +11,16 @@ const updateNotifier = require('update-notifier');
 const gitUrlParse = require("git-url-parse");
 const slug = require('slug');
 const pkg = require('../../package.json');
+
+function getCurrentGitHubRepo() {
+  try {
+    var remoteUrl = execSync('git config --get remote.origin.url').toString();
+    var parsedUrl = gitUrlParse(remoteUrl.trim());
+    if (parsedUrl.owner && parsedUrl.name)
+      return parsedUrl.owner + '/' + parsedUrl.name;
+  } catch (e) {}
+  return undefined;
+}
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
@@ -24,22 +36,11 @@ module.exports = yeoman.Base.extend({
       samples: true,
       installSwaggerUI: true
     };
-    var swagger = {};
+
+    var swagger = null;
     if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
       swagger = yaml.readSync(this.destinationPath('spec/swagger.yaml'));
     }
-    swagger.info = swagger.info || {};
-    swagger.info.contact = swagger.info.contact || {};
-
-    defaults.name = swagger.title || this.appname;
-    defaults.description = swagger.info.description || '';
-
-    try {
-      var remoteUrl = execSync('git config --get remote.origin.url').toString();
-      var parsedUrl = gitUrlParse(remoteUrl.trim());
-      if (parsedUrl.owner && parsedUrl.name)
-        defaults.repo = parsedUrl.owner + '/' + parsedUrl.name;
-    } catch (e) {}
 
     var config = this.config.getAll();
     Object.assign(defaults, config);
@@ -48,12 +49,9 @@ module.exports = yeoman.Base.extend({
       type: 'input',
       name: 'name',
       message: 'Your API name (without API)',
-      default: defaults.name
-    }, {
-      type: 'input',
-      name: 'description',
-      message: 'Short description',
-      default: defaults.description
+      default: () => {
+        return _.get(swagger, 'info.title') || this.appname;
+      }
     }, {
       type: 'input',
       name: 'redocVersion',
@@ -64,7 +62,7 @@ module.exports = yeoman.Base.extend({
       name: 'repo',
       message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
         chalk.yellow('? ') + 'GitHub Repository?',
-      default: defaults.repo,
+      default: getCurrentGitHubRepo,
       validate: function (input) {
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
