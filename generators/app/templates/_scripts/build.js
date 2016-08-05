@@ -11,7 +11,7 @@ cp('-R', 'web/*', 'web_deploy/');
 exec('npm run swagger bundle --        -o web_deploy/swagger.json');
 exec('npm run swagger bundle -- --yaml -o web_deploy/swagger.yaml');
 
-<% if (installSwaggerUI) { %>,
+<% if (installSwaggerUI) { %>
 var Path = require('path');
 var SWAGGER_UI_DIST = Path.dirname(require.resolve('swagger-ui'));
 SWAGGER_UI_DIST = '/Users/ivang/dev/generator-test/node_modules/swagger-ui/dist/'
