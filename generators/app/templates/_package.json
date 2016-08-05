@@ -8,8 +8,10 @@
     "gulp": "^3.9.1",
     "gulp-connect": "^4.2.0",
     "portfinder": "^1.0.3",
-    "swagger-repo": "^1.0.0",<% if (installSwaggerUI) { %>
-    "swagger-ui": "^2.1.4",<% } %>
+    "swagger-repo": "^1.0.0",
+<% if (installSwaggerUI) { -%>
+    "swagger-ui": "^2.1.4",
+<% } -%>
     "shelljs": "^0.7.0"
   },
   "private": true,
