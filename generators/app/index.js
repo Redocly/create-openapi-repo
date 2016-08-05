@@ -139,9 +139,9 @@ module.exports = yeoman.Base.extend({
         this.templatePath('_gulpfile.js'),
         this.destinationPath('gulpfile.js'), this.props
       );
-      this.fs.copy(
+      this.fs.copyTpl(
         this.templatePath('_scripts/build.js'),
-        this.destinationPath('scripts/build.js')
+        this.destinationPath('scripts/build.js'), this.props
       );
 
       if (this.props.travis) {
