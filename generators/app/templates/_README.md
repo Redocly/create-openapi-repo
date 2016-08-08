@@ -24,10 +24,10 @@
 - Look full spec:
     + JSON [http://localhost:3000/swagger.json](http://localhost:3000/swagger.json)
     + YAML [http://localhost:3000/swagger.yaml](http://localhost:3000/swagger.yaml)  (may not be fully functional)
-<% if (installSwaggerUI) { %>- Browse Swagger UI:
-    + JSON [http://localhost:3000/swagger-ui/?url=http://localhost:3000/swagger.json](http://localhost:3000/?url=http://localhost:3000/swagger.json)
-    + YAML [http://localhost:3000/swagger-ui/?url=http://localhost:3000/swagger.yaml](http://localhost:3000/?url=http://localhost:3000/swagger.yaml)  (may not be fully functional)
-<% } %>- Browse ReDoc: [http://localhost:3000/](http://localhost:3000/)
+<% if (installSwaggerUI) { -%>
+- Browse Swagger UI: [http://localhost:3000/swagger-ui/](http://localhost:3000/swagger-ui/)
+<% } -%>
+- Browse ReDoc: [http://localhost:3000/](http://localhost:3000/)
 - Preview spec version for branch `<branch>` (**doesn't work locally**): [http://<%= ghRepoUser %>.github.io/<%= ghRepoName %>/preview/&lt;branch&gt;](http://<%= ghRepoUser %>.github.io/<%= ghRepoName %>/preview/branch)
 **!** Branch preview is not available until Travis CI deploy it
 - Import spec by URL in editor, online or local (you should uncheck "Use CORS proxy" in the model)
