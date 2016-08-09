@@ -167,6 +167,9 @@ module.exports = yeoman.Base.extend({
         this.templatePath('_spec/swagger.yaml'),
         this.destinationPath('spec/swagger.yaml'), this.props
       );
+      this.fs.copy(this.templatePath('_spec/README.md'),
+        this.destinationPath('spec/README.md')
+      );
 
       this.fs.copy(this.templatePath('_spec/paths/pet.yaml'),
         this.destinationPath('spec/paths/pet.yaml')
