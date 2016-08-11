@@ -8,6 +8,7 @@
     "deploy-to-gh-pages": "^1.1.0",
     "gulp": "^3.9.1",
     "gulp-connect": "^4.2.0",
+    "gulp-util": "^3.0.7",
     "portfinder": "^1.0.3",
     "shelljs": "^0.7.0",
     "swagger-repo": "^1.0.0"<% if (installSwaggerUI) { %>,

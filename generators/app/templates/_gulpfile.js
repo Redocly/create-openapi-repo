@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var util = require('gulp-util')
 var gulpConnect = require('gulp-connect');
 var connect = require('connect');
 var cors = require('cors');
@@ -29,6 +30,7 @@ gulp.task('edit', function() {
     var app = connect();
     app.use(swaggerRepo.swaggerEditorMiddleware());
     app.listen(port);
+    util.log(util.colors.green('swagger-editor started http://localhost:' + port));
   });
 });
 
