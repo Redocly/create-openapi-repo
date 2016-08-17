@@ -9,6 +9,7 @@ const execSync = require('child_process').execSync;
 const fs = require('fs');
 const updateNotifier = require('update-notifier');
 const gitUrlParse = require("git-url-parse");
+const swaggerRepo = require("swagger-repo");
 const slug = require('slug');
 const pkg = require('../../package.json');
 
@@ -41,6 +42,7 @@ module.exports = yeoman.Base.extend({
 
     const defaults = {
       redocVersion: 'latest',
+      splitSpec: false,
       samples: true,
       installSwaggerUI: true
     };
@@ -54,11 +56,35 @@ module.exports = yeoman.Base.extend({
     Object.assign(defaults, config);
 
     var prompts = [{
+      type: 'confirm',
+      name: 'importExistingSpec',
+      message: 'Do you already have OpenAPI/Swagger spec for your API?',
+      default: false,
+      when: function () {
+        return swagger === null;
+      }
+    }, {
+      type: 'input',
+      name: 'importedSpec',
+      message: 'Please specify path to OpenAPI/Swagger spec(local file)?',
+      when: function (props) {
+        return props.importExistingSpec
+      },
+      validate: function (path) {
+        try {
+          swagger = fs.readFileSync(path, 'utf-8');
+          return true;
+        }
+        catch(e) {
+          return e.toString();
+        }
+      },
+    }, {
       type: 'input',
       name: 'name',
       message: 'Your API name (without API)',
-      default: () => {
-        return _.get(swagger, 'info.title') || this.appname;
+      default: function () {
+        return _.get(swagger, 'title') || defaults.name || this.appname;
       }
     }, {
       type: 'input',
@@ -74,6 +100,11 @@ module.exports = yeoman.Base.extend({
       validate: function (input) {
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
+    }, {
+      type: 'confirm',
+      name: 'splitSpec',
+      message: 'Split spec into separate files: paths/*, definitions/*  [Experimental]?',
+      default: defaults.splitSpec
     }, {
       type: 'confirm',
       name: 'samples',
@@ -160,41 +191,36 @@ module.exports = yeoman.Base.extend({
       );
     },
     mainswagger: function () {
-      if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
-        return;
-      }
-      this.fs.copyTpl(
-        this.templatePath('_spec/swagger.yaml'),
-        this.destinationPath('spec/swagger.yaml'), this.props
-      );
       this.fs.copy(this.templatePath('_spec/README.md'),
         this.destinationPath('spec/README.md')
       );
 
-      this.fs.copy(this.templatePath('_spec/paths/pet.yaml'),
-        this.destinationPath('spec/paths/pet.yaml')
-      );
-      this.fs.copy(this.templatePath('_spec/paths/README.md'),
-        this.destinationPath('spec/paths/README.md')
-      );
-      this.fs.copy(this.templatePath('_spec/definitions/Pet.yaml'),
-        this.destinationPath('spec/definitions/Pet.yaml')
-      );
-      this.fs.copy(this.templatePath('_spec/definitions/README.md'),
-        this.destinationPath('spec/definitions/README.md')
-      );
-    },
-    samples: function () {
-      if (!this.props.samples) {
+      if (this.props.splitSpec) {
+        this.fs.copy(this.templatePath('_spec/paths/README.md'),
+          this.destinationPath('spec/paths/README.md')
+        );
+        this.fs.copy(this.templatePath('_spec/definitions/README.md'),
+          this.destinationPath('spec/definitions/README.md')
+        );
+      }
+
+      if (this.props.samples) {
+        this.fs.copy(this.templatePath('_spec/code_samples/README.md'),
+          this.destinationPath('spec/code_samples/README.md')
+        );
+      }
+
+      if (this.fs.exists(this.destinationPath('spec/swagger.yaml'))) {
         return;
       }
-      if (this.fs.exists(this.destinationPath('spec/code_samples/README.md'))) {
-        return;
-      }
-      this.bulkDirectory('_spec/code_samples', 'spec/code_samples');
+
+      var swaggerFile = this.props.importedSpec;
+      if (!swaggerFile)
+        swaggerFile = require.resolve('openapi-petstore-extended');
+
+      swaggerRepo.syncWithSwagger(this.fs.read(swaggerFile))
     }
   },
-
   install: function () {
     this.config.save();
     this.installDependencies({
