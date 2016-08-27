@@ -1,6 +1,14 @@
 # generator-openapi-repo [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > Yeoman generator for OpenAPI(fka Swagger) repo to help you share spec for your API
 
+## Why?
+There are a few advantages in hosting your API specification + docs on GitHub:
+ - comunity engagement (PR's and issues)
+ - hosting on GitHub pages (perfect uptime, CDN, Jekyll, custom domains with CNAME)
+ - advertisment in GitHub community
+ - revision history, branching, CI
+ - fast on-boarding time (everyone knows how to use GitHub :smile:)
+
 ## Features
 This generator helps to create GitHub repo with the following features:
  - Possibility to split big Swagger spec into smaller files and bundle it for deployment
