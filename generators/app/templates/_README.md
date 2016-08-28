@@ -34,20 +34,9 @@
 
 ### Usage
 
-- Run `npm start`
-- Look full spec:
-    + JSON [http://localhost:3000/swagger.json](http://localhost:3000/swagger.json)
-    + YAML [http://localhost:3000/swagger.yaml](http://localhost:3000/swagger.yaml)
-<% if (installSwaggerUI) { -%>
-- Browse Swagger UI: [http://localhost:3000/swagger-ui/](http://localhost:3000/swagger-ui/)
-<% } -%>
-- Browse ReDoc: [http://localhost:3000/](http://localhost:3000/)
-- Import spec by URL in editor, online or local (you should uncheck "Use CORS proxy" in the model)
-
-### Tests
-
-Run command from project root directory:
-
-```bash
-npm test
-```
+1. Run `npm start`
+2. Checkout console output to see where local server is started. You can use all links (except preview) by replacing <%= ghPagesBaseUrl %> with url from this message: `Server started <url>`.
+3. Make changes using your favorite editor or `swagger-editor` (look for URL in console output).
+4. All changes are applied on your local server, moreover all documentation pages will be automagically refreshed in browser.
+5. When you finish with your changes you can run tests using this command: `npm test`
+6. Share you changes with the rest of the world by commiting it :smile:
