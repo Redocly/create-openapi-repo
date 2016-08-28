@@ -12,27 +12,39 @@
 6. [Optional] If you documenting public API please consider adding it into [APIs.guru](https://APIs.guru) directory using [this form](https://apis.guru/add-api/).
 7. Delete this section :smile:
 
-## Installing
+## Links
+
+- Documentation(ReDoc): <%= ghPagesBaseUrl %>
+<% if (installSwaggerUI) { -%>
+- SwaggerUI: <%= ghPagesBaseUrl %>swagger-ui/
+<% } -%>
+- Look full spec:
+    + JSON <%= ghPagesBaseUrl %>swagger.json
+    + YAML <%= ghPagesBaseUrl %>swagger.yaml
+- Preview spec version for branch `<branch>`: <%= ghPagesBaseUrl %>preview/`branch`
+
+**Warning:** All above links will updated only after Travis CI finish deploy
+
+## Development
+### Installing
 
 1. Install [Node JS](https://nodejs.org/)
 2. Clone repo and `cd`
     + Run `npm install`
 
-## Usage
+### Usage
 
 - Run `npm start`
 - Look full spec:
     + JSON [http://localhost:3000/swagger.json](http://localhost:3000/swagger.json)
-    + YAML [http://localhost:3000/swagger.yaml](http://localhost:3000/swagger.yaml)  (may not be fully functional)
+    + YAML [http://localhost:3000/swagger.yaml](http://localhost:3000/swagger.yaml)
 <% if (installSwaggerUI) { -%>
 - Browse Swagger UI: [http://localhost:3000/swagger-ui/](http://localhost:3000/swagger-ui/)
 <% } -%>
 - Browse ReDoc: [http://localhost:3000/](http://localhost:3000/)
-- Preview spec version for branch `<branch>` (**doesn't work locally**): [http://<%= ghRepoUser %>.github.io/<%= ghRepoName %>/preview/&lt;branch&gt;](http://<%= ghRepoUser %>.github.io/<%= ghRepoName %>/preview/branch)
-**!** Branch preview is not available until Travis CI deploy it
 - Import spec by URL in editor, online or local (you should uncheck "Use CORS proxy" in the model)
 
-## Tests
+### Tests
 
 Run command from project root directory:
 
