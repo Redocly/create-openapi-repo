@@ -26,7 +26,7 @@ function getCurrentGitHubRepo() {
 
 function getGhPagesBaseUrl(user, repo) {
   // TODO: support CNAME
-  var url = user + '.github.io';
+  var url = user.toLowerCase() + '.github.io';
   if (repo !== url) {
     url += '/' + repo;
   }
