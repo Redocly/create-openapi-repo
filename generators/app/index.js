@@ -230,7 +230,7 @@ module.exports = yeoman.Base.extend({
       bower: false,
       callback: () => {
         this.log(chalk.green(
-          '✨Congratulation!✨\n' +
+          '✨ Congratulation!✨\n' +
           'Your OpenAPI repo has been generated.\n' +
           'Check out README.md for the further steps'
         ))

@@ -16,6 +16,8 @@ This generator helps to create a GitHub repo with the following features:
  - Code samples as separate files
  - Swagger spec is validated after each commit
  - Swagger spec + ReDoc deployed to Github Pages (you can use a custom domain)
+ - Live editing in your editor or `swagger-editor` :heart_eyes:
+ ![live editing](./live-edit.gif)
 
 ## Installation
 
