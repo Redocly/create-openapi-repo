@@ -43,7 +43,7 @@ module.exports = yeoman.Base.extend({
     updateNotifier({pkg}).notify();
 
     const defaults = {
-      redocVersion: 'latest',
+      redocVersion: 'v1.x.x',
       splitSpec: false,
       samples: true,
       installSwaggerUI: true
@@ -90,13 +90,12 @@ module.exports = yeoman.Base.extend({
     }, {
       type: 'input',
       name: 'redocVersion',
-      message: 'ReDoc version to use (e.g. v0.9.0)',
+      message: 'ReDoc version to use (e.g. v1.1.2, latest, v1.x.x)',
       default: defaults.redocVersion
     }, {
       type: 'input',
       name: 'repo',
-      message: chalk.yellow('Specify name of GitHub repo in format: User/Repo\n') +
-        chalk.yellow('? ') + 'GitHub Repository?',
+      message: `Specify name of GitHub repo in format ${chalk.blue('User/Repo')}:`,
       default: getCurrentGitHubRepo,
       validate: function (input) {
         return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
@@ -104,7 +103,7 @@ module.exports = yeoman.Base.extend({
     }, {
       type: 'confirm',
       name: 'splitSpec',
-      message: 'Split spec into separate files: paths/*, definitions/*  [Experimental]?',
+      message: `Split spec into separate files: paths/*, definitions/* ${chalk.yellow('[Experimental]')}?`,
       default: defaults.splitSpec
     }, {
       type: 'confirm',
@@ -228,7 +227,14 @@ module.exports = yeoman.Base.extend({
   install: function () {
     this.config.save();
     this.installDependencies({
-      bower: false
+      bower: false,
+      callback: () => {
+        this.log(chalk.green(
+          '✨Congratulation!✨\n' +
+          'Your OpenAPI repo has been generated.\n' +
+          'Check out README.md for the further steps'
+        ))
+      }
     });
   }
 });
