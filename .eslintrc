@@ -1,0 +1,10 @@
+extends: "eslint:recommended"
+env:
+  node: true
+  shelljs: true
+  es6: true
+rules:
+  no-warning-comments: 0
+  no-empty:
+    - "error"
+    - allowEmptyCatch: true

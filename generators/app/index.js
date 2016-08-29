@@ -8,8 +8,8 @@ const yaml = require('node-yaml');
 const execSync = require('child_process').execSync;
 const fs = require('fs');
 const updateNotifier = require('update-notifier');
-const gitUrlParse = require("git-url-parse");
-const swaggerRepo = require("swagger-repo");
+const gitUrlParse = require('git-url-parse');
+const swaggerRepo = require('swagger-repo');
 const slug = require('slug');
 const pkg = require('../../package.json');
 
@@ -17,8 +17,9 @@ function getCurrentGitHubRepo() {
   try {
     var remoteUrl = execSync('git config --get remote.origin.url').toString();
     var parsedUrl = gitUrlParse(remoteUrl.trim());
-    if (parsedUrl.owner && parsedUrl.name)
+    if (parsedUrl.owner && parsedUrl.name) {
       return parsedUrl.owner + '/' + parsedUrl.name;
+    }
   } catch (e) {}
   return undefined;
 }
@@ -26,8 +27,9 @@ function getCurrentGitHubRepo() {
 function getGhPagesBaseUrl(user, repo) {
   // TODO: support CNAME
   var url = user + '.github.io';
-  if (repo !== url)
+  if (repo !== url) {
     url += '/' + repo;
+  }
   return 'https://' + url + '/';
 }
 
@@ -68,17 +70,16 @@ module.exports = yeoman.Base.extend({
       name: 'importedSpec',
       message: 'Please specify path to OpenAPI/Swagger spec(local file)?',
       when: function (props) {
-        return props.importExistingSpec
+        return props.importExistingSpec;
       },
       validate: function (path) {
         try {
           swagger = fs.readFileSync(path, 'utf-8');
           return true;
-        }
-        catch(e) {
+        } catch (e) {
           return e.toString();
         }
-      },
+      }
     }, {
       type: 'input',
       name: 'name',
@@ -130,10 +131,12 @@ module.exports = yeoman.Base.extend({
       this.props.npmName = slug(this.props.name) + '-openapi-spec';
       if (this.fs.exists(this.destinationPath('package.json'))) {
         var npmPackage = JSON.parse(fs.readFileSync(this.destinationPath('package.json')));
-        if (npmPackage.version)
+        if (npmPackage.version) {
           this.props.npmVersion = npmPackage.version;
-        if (npmPackage.name)
+        }
+        if (npmPackage.name) {
           this.props.npmName = npmPackage.name;
+        }
       }
 
       this.props.ghPagesBaseUrl = getGhPagesBaseUrl(this.props.ghRepoUser, this.props.ghRepoName);
@@ -215,10 +218,11 @@ module.exports = yeoman.Base.extend({
       }
 
       var swaggerFile = this.props.importedSpec;
-      if (!swaggerFile)
+      if (!swaggerFile) {
         swaggerFile = require.resolve('openapi-petstore-extended');
+      }
 
-      swaggerRepo.syncWithSwagger(this.fs.read(swaggerFile))
+      swaggerRepo.syncWithSwagger(this.fs.read(swaggerFile));
     }
   },
   install: function () {
