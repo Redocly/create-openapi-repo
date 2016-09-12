@@ -229,8 +229,12 @@ module.exports = yeoman.Base.extend({
       callback: () => {
         this.log(chalk.green(
           '✨ Congratulation!✨\n' +
-          'Your OpenAPI repo has been generated.\n' +
-          'Check out README.md for the further steps'
+          'Commit and push your changes to the GitHub and follow\n' +
+          'instruction from README.md of your newly created repo.\n\n' +
+          'Run the following commands:\n\n' +
+          'git add .\n' +
+          'git commit -m "initial commit"\n' +
+          'git push'
         ))
       }
     });

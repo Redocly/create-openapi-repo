@@ -4,14 +4,15 @@
 ## Steps to finish
 
 1. Enable [Travis](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI%3A) for your repository (**note**: you already have `.travis.yml` file)
-2. [Create GitHub access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/); check `public_repo` on `Select scopes` section. Then use the token value as a value for [Travis environment variable](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings) with the name `GH_TOKEN`
-2. Make a test commit to trigger CI: `git commit --allow-empty -m "Test Travis CI" && git push`
-3. Wait until Travis build is finished. You can check progress by clicking on the `Build Status` badge at the top
-4. If you did everything correct, <%= ghPagesBaseUrl %> will lead to your new docs
-5. **[Optional]** You can setup [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/) (just create `web/CNAME` file)
-6. Start writing/editing your OpenAPI spec: check out [usage](#usage) section below
-7. **[Optional]** If you document public API consider adding it into [APIs.guru](https://APIs.guru) directory using [this form](https://apis.guru/add-api/).
-8. Delete this section :smile:
+2. [Create GitHub access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/); check `public_repo` on `Select scopes` section.
+3. Use the token value as a value for [Travis environment variable](https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings) with the name `GH_TOKEN`
+4. Make a test commit to trigger CI: `git commit --allow-empty -m "Test Travis CI" && git push`
+5. Wait until Travis build is finished. You can check progress by clicking on the `Build Status` badge at the top
+6. If you did everything correct, <%= ghPagesBaseUrl %> will lead to your new docs
+7. **[Optional]** You can setup [custom domain](https://help.github.com/articles/using-a-custom-domain-with-github-pages/) (just create `web/CNAME` file)
+8. Start writing/editing your OpenAPI spec: check out [usage](#usage) section below
+9. **[Optional]** If you document public API consider adding it into [APIs.guru](https://APIs.guru) directory using [this form](https://apis.guru/add-api/).
+10. Delete this section :smile:
 
 ## Links
 
@@ -26,7 +27,7 @@
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
-## Development
+## Working on specification
 ### Install
 
 1. Install [Node JS](https://nodejs.org/)
@@ -41,4 +42,4 @@
 4. All changes are immediately propagated to your local server, moreover all documentation pages will be automagically refreshed in a browser after each change
 **TIP:** you can open `swagger-editor`, documentation and `swagger-ui` in parallel
 5. Once you finish with the changes you can run tests using: `npm test`
-6. Share you changes with the rest of the world by commiting :smile:
+6. Share you changes with the rest of the world by pushing to GitHub :smile:
