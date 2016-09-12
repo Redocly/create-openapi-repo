@@ -216,7 +216,7 @@ module.exports = yeoman.Base.extend({
 
       var swaggerFile = this.props.importedSpec;
       if (!swaggerFile) {
-        swaggerFile = require.resolve('openapi-petstore-extended');
+        swaggerFile = require.resolve('openapi-template');
       }
 
       swaggerRepo.syncWithSwagger(this.fs.read(swaggerFile));
