@@ -21,6 +21,6 @@
     "swagger": "swagger-repo",
     "test": "swagger-repo validate",
     "start": "gulp serve",
-    "deploy-branch": "node ./scripts/deploy-branch"
+    "deploy-branch": "node ./scripts/deploy-branch.js"
   }
 }

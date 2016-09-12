@@ -177,12 +177,10 @@ module.exports = yeoman.Base.extend({
         this.destinationPath('scripts/build.js'), this.props
       );
 
-      if (this.props.travis) {
-        this.fs.copy(
-          this.templatePath('_scripts/deploy-branch.js'),
-          this.destinationPath('scripts/deploy-branch.js')
-        );
-      }
+      this.fs.copy(
+        this.templatePath('_scripts/deploy-branch.js'),
+        this.destinationPath('scripts/deploy-branch.js')
+      );
       // delete old build.sh
       this.fs.delete(this.destinationPath('scripts/build.sh'));
     },
