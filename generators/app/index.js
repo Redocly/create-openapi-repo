@@ -43,7 +43,6 @@ module.exports = yeoman.Base.extend({
     updateNotifier({pkg}).notify();
 
     const defaults = {
-      redocVersion: 'v1.x.x',
       splitSpec: false,
       samples: true,
       installSwaggerUI: true
@@ -87,11 +86,6 @@ module.exports = yeoman.Base.extend({
       default: function () {
         return _.get(swagger, 'title') || defaults.name || this.appname;
       }
-    }, {
-      type: 'input',
-      name: 'redocVersion',
-      message: 'ReDoc version to use (e.g. v1.1.2, latest, v1.x.x)',
-      default: defaults.redocVersion
     }, {
       type: 'input',
       name: 'repo',
