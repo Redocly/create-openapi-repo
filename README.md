@@ -23,7 +23,12 @@ This generator helps to create a GitHub repo with the following features:
  - Live editing in your editor or `swagger-editor` :heart_eyes:
  ![live editing](./live-edit.gif)
 
-## Installation
+## Examples of generated repositories
+- https://github.com/Rebilly/RebillyAPI
+- https://github.com/thingful/openapi-spec
+- https://github.com/TwineHealth/TwineDeveloperDocs
+
+## How to generate your repository
 
 We assume you already have [node.js](https://nodejs.org/) installed.
 
