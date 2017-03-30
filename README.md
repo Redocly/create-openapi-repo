@@ -2,7 +2,9 @@
 > Yeoman generator for OpenAPI(fka Swagger) repo to help you share spec for your API
 
 <center>
+
 ![logo](./logo.png)
+
 </center>
 
 ## Why?
