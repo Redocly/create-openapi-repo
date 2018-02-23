@@ -10,7 +10,7 @@ const fs = require('fs');
 const updateNotifier = require('update-notifier');
 const gitUrlParse = require('git-url-parse');
 const swaggerRepo = require('swagger-repo');
-const slug = require('slug');
+const slug = require('slugify');
 const pkg = require('../../package.json');
 
 function getCurrentGitHubRepo() {
