@@ -9,7 +9,6 @@ exec('swagger-repo bundle -o ./web_deploy/swagger.json'); //this wants a single 
 //now load that file
 var SwaggerFile = require('../web_deploy/swagger.json'); //this wants a double dot
 
-//var result = SwaggerSnippet.getEndpointSnippets(SwaggerFile, '/boards/{board_type}', 'post' ,['shell_wget','shell_curl'])
 var results = SwaggerSnippet.getSwaggerSnippets(SwaggerFile,
         [
         'perl_perl5',
