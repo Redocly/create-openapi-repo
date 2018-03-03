@@ -4,8 +4,10 @@ require('shelljs/global');
 var fs = require('fs')
 var stringifyObject = require('stringify-object');
 var SwaggerSnippet = require('swagger-snippet')
+
 //first regenerate combined file to ensure it is up to date.
 exec('swagger-repo bundle -o ./web_deploy/swagger.json'); //this wants a single dot
+
 //now load that file
 var SwaggerFile = require('../web_deploy/swagger.json'); //this wants a double dot
 
