@@ -27,7 +27,7 @@
     "slugify": "^1.2.9",
     "swagger-repo": "^1.5.0",
     "update-notifier": "^2.3.0",
-    "yeoman-generator": "^0.24.1",
+    "yeoman-generator": "^2.0.5",
     "yosay": "^2.0.1"
   },
   "devDependencies": {
