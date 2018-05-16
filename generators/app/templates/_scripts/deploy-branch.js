@@ -11,6 +11,7 @@ if (branch && branch !== 'gh-pages') {
   var branchPath = path.join('.tmp', 'preview', branch, '/');
   mkdir('-p', branchPath);
   exec('npm run swagger bundle -- -o ' + branchPath + 'swagger.json');
+  exec('npm run swagger bundle -- --yaml -o ' + branchPath + 'swagger.yaml');
   cp('web/index.html', branchPath);
   exec('deploy-to-gh-pages --update .tmp');
 }
