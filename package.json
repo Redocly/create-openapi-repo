@@ -28,7 +28,8 @@
     "swagger-repo": "^1.5.0",
     "update-notifier": "^2.3.0",
     "yeoman-generator": "^0.24.1",
-    "yosay": "^2.0.1"
+    "yosay": "^2.0.1",
+    "snyk": "^1.88.0"
   },
   "devDependencies": {
     "eslint": "^4.18.1",
@@ -48,7 +49,10 @@
   },
   "repository": "Rebilly/generator-openapi-repo",
   "scripts": {
-    "prepublish": "gulp prepublish"
+    "prepublish": "gulp prepublish",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "snyk": true
 }
