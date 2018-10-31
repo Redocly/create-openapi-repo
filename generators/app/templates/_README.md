@@ -1,5 +1,5 @@
 # <%= name %> OpenAPI Specification
-[![Build Status](https://travis-ci.org/<%= repo %>.svg?branch=master)](https://travis-ci.org/<%= repo %>)
+[![Build Status](https://travis-ci.com/<%= repo %>.svg?branch=master)](https://travis-ci.org/<%= repo %>)
 
 ## Steps to finish
 
