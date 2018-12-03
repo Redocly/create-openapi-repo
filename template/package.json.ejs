@@ -1,0 +1,14 @@
+{
+  "name": "<%= packageName %>",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "private": true,
+  "scripts": {
+    <% if (travis) { -%>"deploy": "swagger-repo build web_deploy && deploy-to-gh-pages --update web_deploy",<% } -%>
+    "start": "swagger-repo start",
+    "build": "swagger-repo build web_deploy",
+    "test": "swagger-repo validate",
+    "deploy-branch": "node ./scripts/deploy-branch.js"
+  }
+}
