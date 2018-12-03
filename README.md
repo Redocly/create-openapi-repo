@@ -1,5 +1,5 @@
-# generator-openapi-repo [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Yeoman generator for OpenAPI(fka Swagger) repo to help you share spec for your API
+# create-openapi-repo [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
+> Generator for OpenAPI(fka Swagger) repository
 
 <center>
 
@@ -34,25 +34,21 @@ This generator helps to create a GitHub repo with the following features:
 
 We assume you already have [node.js](https://nodejs.org/) installed.
 
-- First, install [Yeoman](http://yeoman.io) and `generator-openapi-repo`:
+- Install `create-openapi-repo` globally:
 ```bash
-npm install -g yo
-npm install -g generator-openapi-repo
+npm install -g create-openapi-repo
 ```
-- Then [create GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI spec will live.
+or use [`npx`](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
+
+```bash
+npx create-openapi-repo <spec-root>
+```
+- [Create GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI spec will live.
 - [Clone your repo](https://help.github.com/articles/cloning-a-repository/) and execute the following command inside it:
 ```bash
-yo openapi-repo
+create-openapi-repo .
 ```
 -  Commit and push your changes to the GitHub and follow instruction from `README.md` of your newly created repo.
-**Note**: don't forget to commit the `.yo-rc.json` file, it contains all answers gave to yeoman, and they are reused during the update procedure.
-
-## Updating an existing project
-  - First make sure you have committed everything or have a backup
-  - Run `yo openapi-repo` over the project again
-  - `yo` will ask you for each file if you want to overwrite
-  - For those files you haven't edited, just say yes
-  - For the other ones, type `d` for diff and see what's changed
 
 [npm-image]: https://badge.fury.io/js/generator-openapi-repo.svg
 [npm-url]: https://npmjs.org/package/generator-openapi-repo
