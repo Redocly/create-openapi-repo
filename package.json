@@ -1,6 +1,6 @@
 {
-  "name": "generator-openapi-repo",
-  "version": "1.0.1",
+  "name": "create-openapi-repo",
+  "version": "2.0.0-rc.0",
   "description": "Generator of OpenAPI(fka Swagger) repository",
   "author": {
     "name": "Roman Hotsiy",
