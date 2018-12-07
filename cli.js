@@ -1,13 +1,13 @@
-const fs = require("fs");
-const path = require("path");
-const inquirer = require("inquirer");
-const chalk = require("chalk");
+const fs = require('fs');
+const path = require('path');
+const inquirer = require('inquirer');
+const chalk = require('chalk');
 const prompt = inquirer.createPromptModule();
-const yaml = require("js-yaml");
-const slugify = require("slugify");
+const yaml = require('js-yaml');
+const slugify = require('slugify');
 const { execSync } = require('child_process');
 
-const swaggerRepo = require("swagger-repo");
+const swaggerRepo = require('swagger-repo');
 
 const {
   copy,
@@ -16,29 +16,28 @@ const {
   getGhPagesBaseUrl,
   validateSpecFileName,
   getCurrentGitHubRepo
-} = require("./lib/utils");
+} = require('./lib/utils');
 
-const { installDeps } = require("./lib/install-deps");
+const { installDeps } = require('./lib/install-deps');
 
-const REDOCLY_RC = ".redoclyrc";
+const REDOCLY_RC = '.redoclyrc';
 
 async function ask() {
-  console.log("Welcome to the " + chalk.green("OpenAPI-Repo") + " generator!");
+  console.log('Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!');
 
   const { haveSpec } = await prompt({
-    type: "confirm",
-    name: "haveSpec",
-    message: "Do you already have OpenAPI/Swagger spec for your API?",
+    type: 'confirm',
+    name: 'haveSpec',
+    message: 'Do you already have OpenAPI/Swagger spec for your API?',
     default: false
   });
 
   let specFileName;
   if (haveSpec) {
     specFileName = (await prompt({
-      type: "input",
-      name: "specFileName",
-      message:
-        "Please specify the path to the OpenAPI spec (local file):",
+      type: 'input',
+      name: 'specFileName',
+      message: 'Please specify the path to the OpenAPI spec (local file):',
       validate(fileName) {
         return validateSpecFileName(fileName);
       }
@@ -47,43 +46,43 @@ async function ask() {
 
   let spec;
   if (haveSpec) {
-    spec = yaml.safeLoad(fs.readFileSync(specFileName, "utf8"));
+    spec = yaml.safeLoad(fs.readFileSync(specFileName, 'utf8'));
   }
 
   const { apiTitle } = await prompt({
-    type: "input",
-    name: "apiTitle",
-    message: "API Name:",
+    type: 'input',
+    name: 'apiTitle',
+    message: 'API Name:',
     default: haveSpec ? spec.title : undefined,
     validate: i => (i.length > 0 ? true : `API Name can't be empty`)
   });
 
   const { splitSpec } = await prompt({
-    type: "confirm",
-    name: "splitSpec",
+    type: 'confirm',
+    name: 'splitSpec',
     message: `Split spec into separate files: paths/*, definitions/* ${chalk.yellow(
-      "[Experimental]"
+      '[Experimental]'
     )}?`,
     default: true
   });
 
   const { codeSamples } = await prompt({
-    type: "confirm",
-    name: "codeSamples",
+    type: 'confirm',
+    name: 'codeSamples',
     message: `Prepare manual code samples folder?`,
     default: true
   });
 
   const { swaggerUI } = await prompt({
-    type: "confirm",
-    name: "swaggerUI",
+    type: 'confirm',
+    name: 'swaggerUI',
     message: `Install SwaggerUI?`,
     default: false
   });
 
   const { travis } = await prompt({
-    type: "confirm",
-    name: "travis",
+    type: 'confirm',
+    name: 'travis',
     message: `Set up Travis CI?`,
     default: true
   });
@@ -91,14 +90,12 @@ async function ask() {
   let repo;
   if (travis) {
     repo = (await prompt({
-      type: "input",
-      name: "repo",
-      message: `Specify name of GitHub repo in format ${chalk.blue(
-        "User/Repo"
-      )}:`,
+      type: 'input',
+      name: 'repo',
+      message: `Specify name of GitHub repo in format ${chalk.blue('User/Repo')}:`,
       default: getCurrentGitHubRepo,
       validate: function(input) {
-        return input.indexOf("/") > 0 ? true : 'Repo Name must contain "/"';
+        return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
       }
     })).repo;
   }
@@ -117,21 +114,20 @@ async function ask() {
 function printSuccess(opts, root) {
   let travisNote = '';
   if (opts.travis) {
-    travisNote = `We generated ${chalk.blue('.travis')} for you. Follow steps from ${chalk.blue('README.md')} to finish Travis CI setup`
+    travisNote = `We generated ${chalk.blue('.travis')} for you. Follow steps from ${chalk.blue(
+      'README.md'
+    )} to finish Travis CI setup`;
   }
 
-  console.log(`${chalk.green("Success!")} Created ${chalk.green(
-    path.basename(root)
-  )} at ${chalk.blue(root)}
+  console.log(
+    `${chalk.green('Success!')} Created ${chalk.green(path.basename(root))} at ${chalk.blue(root)}
 Inside that directory, you can run several commands:
   
   ${chalk.blue(`npm start`)}
     Starts the development server.
 
   ${chalk.blue(`npm run build`)}
-    Bundles the spec and prepares ${chalk.blue(
-      "web_deploy"
-    )} folder with static assets. 
+    Bundles the spec and prepares ${chalk.blue('web_deploy')} folder with static assets. 
 
   ${chalk.blue(`npm test`)}
     Validates the spec.
@@ -141,8 +137,9 @@ Inside that directory, you can run several commands:
 
 We suggest that you begin by typing:
 
-  ${chalk.blue("cd")} ${path.basename(root)}
-  ${chalk.blue("npm start")}` + (travisNote ? '\n\n' + travisNote : ''));
+  ${chalk.blue('cd')} ${path.basename(root)}
+  ${chalk.blue('npm start')}` + (travisNote ? '\n\n' + travisNote : '')
+  );
 }
 
 async function run() {
@@ -150,21 +147,16 @@ async function run() {
 
   if (!specRoot) {
     console.log(`Please specify the spec directory:
-  ${chalk.blue("create-openapi-repo")} <spec-directory>
+  ${chalk.blue('create-openapi-repo')} <spec-directory>
 
 For example:
-  ${chalk.blue("create-openapi-repo")} my-spec`);
+  ${chalk.blue('create-openapi-repo')} my-spec`);
 
     process.exit(1);
   }
 
-  if (
-    fs.existsSync(specRoot) &&
-    fs.existsSync(path.join(specRoot, REDOCLY_RC))
-  ) {
-    console.log(`The directory ${chalk.green(
-      specRoot
-    )} already contains ${chalk.green(REDOCLY_RC)}
+  if (fs.existsSync(specRoot) && fs.existsSync(path.join(specRoot, REDOCLY_RC))) {
+    console.log(`The directory ${chalk.green(specRoot)} already contains ${chalk.green(REDOCLY_RC)}
 
 Choose another directory or remove contents.
 `);
@@ -185,52 +177,50 @@ Choose another directory or remove contents.
 
   let { specFileName } = opts;
   if (!specFileName) {
-    specFileName = require.resolve("openapi-template");
+    specFileName = require.resolve('openapi-template');
   }
 
   process.chdir(specRoot);
 
-  console.log(
-    `\nCreating a new OpenAPI repo in ${chalk.blue(path.resolve("."))}\n`
-  );
-  await copy(".gitignore");
-  await copy("LICENSE");
-  await render("package.json", data);
-  await render("README.md", data);
-  await copy("spec/README.md");
+  console.log(`\nCreating a new OpenAPI repo in ${chalk.blue(path.resolve('.'))}\n`);
+  await copy('.gitignore');
+  await copy('LICENSE');
+  await render('package.json', data);
+  await render('README.md', data);
+  await copy('spec/README.md');
 
   if (opts.splitSpec) {
-    copyDirSync("spec/definitions");
-    copyDirSync("spec/paths");
+    copyDirSync('spec/definitions');
+    copyDirSync('spec/paths');
   }
 
   if (opts.codeSamples) {
-    copyDirSync("spec/code_samples");
+    copyDirSync('spec/code_samples');
   }
 
   if (opts.travis) {
-    await copy(".travis.yml");
+    await copy('.travis.yml');
   }
 
-  copyDirSync("web");
+  copyDirSync('web');
 
   swaggerRepo.syncWithSpec(fs.readFileSync(specFileName).toString());
 
   fs.writeFileSync(REDOCLY_RC, yaml.safeDump(opts, { skipInvalid: true }));
 
-  console.log("Installing packages. This might take a couple of minutes.\n");
+  console.log('Installing packages. This might take a couple of minutes.\n');
 
   await installDeps('@^2.0.0-rc.2');
   console.log();
 
   try {
-    execSync(`git init`, {stdio: 'inherit'});
+    execSync(`git init`, { stdio: 'inherit' });
     execSync(`git add . && git commit -m "Initial commit from create-openapi-repo"`);
-  } catch(e) {
+  } catch (e) {
     // skip error
   }
 
-  printSuccess(opts, path.resolve("."));
+  printSuccess(opts, path.resolve('.'));
 }
 
 try {
