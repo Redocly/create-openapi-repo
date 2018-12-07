@@ -114,7 +114,7 @@ async function ask() {
 function printSuccess(opts, root) {
   let travisNote = '';
   if (opts.travis) {
-    travisNote = `We generated ${chalk.blue('.travis')} for you. Follow steps from ${chalk.blue(
+    travisNote = `⚠️  We generated ${chalk.blue('.travis')} for you. Follow steps from ${chalk.blue(
       'README.md'
     )} to finish Travis CI setup`;
   }
@@ -150,7 +150,7 @@ async function run() {
   ${chalk.blue('create-openapi-repo')} <spec-directory>
 
 For example:
-  ${chalk.blue('create-openapi-repo')} my-spec`);
+  ${chalk.blue('create-openapi-repo')} test-api-repo`);
 
     process.exit(1);
   }
