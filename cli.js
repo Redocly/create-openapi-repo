@@ -38,7 +38,7 @@ async function ask() {
       type: "input",
       name: "specFileName",
       message:
-        "Please specify the path to the OpenAPI/Swagger spec (local file):",
+        "Please specify the path to the OpenAPI spec (local file):",
       validate(fileName) {
         return validateSpecFileName(fileName);
       }
@@ -115,8 +115,13 @@ async function ask() {
 }
 
 function printSuccess(opts, root) {
+  let travisNote = '';
+  if (opts.travis) {
+    travisNote = `We generated ${chalk.blue('.travis')} for you. Follow steps from ${chalk.blue('README.md')} to finish Travis CI setup`
+  }
+
   console.log(`${chalk.green("Success!")} Created ${chalk.green(
-    path.dirname(root)
+    path.basename(root)
   )} at ${chalk.blue(root)}
 Inside that directory, you can run several commands:
   
@@ -131,15 +136,13 @@ Inside that directory, you can run several commands:
   ${chalk.blue(`npm test`)}
     Validates the spec.
   
-${opts.travis &&
-    `  ${chalk.blue(`npm run deploy`)}
-    Deploys the spec to GitHub Pages. You don't need to run it manually if you have Travis CI configured.
-`}
+  ${chalk.blue(`npm run gh-pages`)}
+    Deploys docs to GitHub Pages. You don't need to run it manually if you have Travis CI configured.
 
 We suggest that you begin by typing:
 
-  ${chalk.blue("cd")} ${path.dirname(root)}
-  ${chalk.blue("npm start")}`);
+  ${chalk.blue("cd")} ${path.basename(root)}
+  ${chalk.blue("npm start")}` + (travisNote ? '\n\n' + travisNote : ''));
 }
 
 async function run() {
@@ -176,7 +179,7 @@ Choose another directory or remove contents.
 
   const data = {
     ...opts,
-    packageName: slugify(opts.apiTitle),
+    packageName: slugify(opts.apiTitle).toLowerCase(),
     ghPagesBaseUrl: opts.repo ? getGhPagesBaseUrl(opts.repo) : undefined
   };
 
@@ -211,13 +214,13 @@ Choose another directory or remove contents.
 
   copyDirSync("web");
 
-  swaggerRepo.syncWithSwagger(fs.readFileSync(specFileName).toString());
+  swaggerRepo.syncWithSpec(fs.readFileSync(specFileName).toString());
 
   fs.writeFileSync(REDOCLY_RC, yaml.safeDump(opts, { skipInvalid: true }));
 
   console.log("Installing packages. This might take a couple of minutes.\n");
 
-  await installDeps(opts);
+  await installDeps('@^2.0.0-rc.2');
   console.log();
 
   try {

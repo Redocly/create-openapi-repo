@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= name %> API Specification</title>
+    <title>API Reference | ReDoc</title>
     <!-- needed for adaptive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <!--
     ReDoc uses font options from the parent element
@@ -15,10 +16,9 @@
         padding: 0;
       }
     </style>
+    {{redocHead}}
   </head>
   <body>
-    <redoc spec-url="./swagger.json">
-    </redoc>
-    <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"> </script>
+    {{redocBody}}
   </body>
 </html>

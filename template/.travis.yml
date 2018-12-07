@@ -4,12 +4,12 @@ node_js:
 deploy:
   - skip_cleanup: true
     provider: script
-    script: npm run deploy
+    script: npm run build && npm run gh-pages
     on:
       branch: master
   - skip_cleanup: true
     provider: script
-    script: npm run deploy-branch
+    script: npm run build && npm run gh-pages -- -p "$TRAVIS_BRANCH"
     on:
       all_branches: true
       condition: '"$TRAVIS_BRANCH" != "master" && "$TRAVIS_BRANCH" != "gh-pages"'

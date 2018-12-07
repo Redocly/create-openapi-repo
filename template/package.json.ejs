@@ -5,10 +5,9 @@
   },
   "private": true,
   "scripts": {
-    <% if (travis) { -%>"deploy": "swagger-repo build web_deploy && deploy-to-gh-pages --update web_deploy",<% } -%>
-    "start": "swagger-repo start",
-    "build": "swagger-repo build web_deploy",
+    "start": "swagger-repo serve",
+    "build": "swagger-repo build -o web_deploy",
     "test": "swagger-repo validate",
-    "deploy-branch": "node ./scripts/deploy-branch.js"
+    "gh-pages": "swagger-repo gh-pages"
   }
 }

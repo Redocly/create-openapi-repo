@@ -1,7 +1,7 @@
 ## Global headers (only for OpenAPI 2)
 
-In order to minimize duplications you can use `headers` global object (similar to `definitions`, `responses`).
-During build process all references to global `headers` will be inlined and `headers` will be removed form resulting spec so spec will be valid (global `headers` is not allowed by Swagger spec):
+When using OpenAPI 2 you can minimize headers duplications by using `headers` global object (similar to `definitions`, `responses`).
+During build process all references to global `headers` will be inlined and `headers` will be removed from the resulting spec so spec will be valid (global `headers` are not allowed by OpenAPI 2 spec):
 
 Example:
 ```yaml

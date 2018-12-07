@@ -1,9 +1,12 @@
-# create-openapi-repo [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Generator for OpenAPI(fka Swagger) repository
+# create-openapi-repo
+
+[![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
+
+> Generator for OpenAPI repository
 
 <center>
 
-![logo](./logo.png)
+<img src="./logo.png" widht="500px"/>
 
 </center>
 
@@ -17,11 +20,11 @@ There are a few advantages in hosting your API specification + docs on GitHub:
 
 ## Features
 This generator helps to create a GitHub repo with the following features:
- - Possibility to split a big Swagger spec into smaller files and bundle it for deployment
+ - Possibility to split a big OpenAPI spec into smaller files and bundle it for deployment
  - Continuous integration/deployment on Travis
  - Code samples as separate files
- - Swagger spec is validated after each commit
- - Swagger spec + ReDoc deployed to Github Pages (you can use a custom domain)
+ - OpenAPI spec is validated after each commit
+ - OpenAPI spec + ReDoc deployed to Github Pages (you can use a custom domain)
  - Live editing in your editor or `swagger-editor` :heart_eyes:
  ![live editing](./live-edit.gif)
 
