@@ -32,11 +32,11 @@
   },
   "devDependencies": {
     "eslint": "^5.9.0",
-    "eslint-config-xo-space": "^0.20.0",
     "prettier": "^1.15.3"
   },
   "eslintConfig": {
-    "extends": "xo-space"
+    "extends": "xo-space",
+    "prettier": "prettier --write lib/**/*.js cli.js"
   },
   "repository": "Rebilly/generator-openapi-repo",
   "scripts": {
