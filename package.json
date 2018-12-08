@@ -6,10 +6,6 @@
     "name": "Roman Hotsiy",
     "email": "gotsijroman@gmail.com"
   },
-  "files": [
-    "lib",
-    "cli.js"
-  ],
   "bin": "cli.js",
   "keywords": [
     "Swagger",
