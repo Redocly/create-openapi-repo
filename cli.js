@@ -33,6 +33,7 @@ async function ask() {
   });
 
   let specFileName;
+  let defaultSpecVersion;
   if (haveSpec) {
     specFileName = (await prompt({
       type: 'input',
@@ -42,6 +43,19 @@ async function ask() {
         return validateSpecFileName(fileName);
       }
     })).specFileName;
+  } else {
+    defaultSpecVersion =
+      (await prompt({
+        type: 'list',
+        choices: ['OpenAPI 3', 'OpenAPI 2'],
+        name: 'version',
+        message: 'Select OpenAPI version:',
+        validate(fileName) {
+          return validateSpecFileName(fileName);
+        }
+      })).version === 'OpenAPI 3'
+        ? '3.0.0'
+        : '2.0';
   }
 
   let spec;
@@ -107,7 +121,8 @@ async function ask() {
     codeSamples,
     swaggerUI,
     travis,
-    repo
+    repo,
+    oasVersion: (defaultSpecVersion || spec.openapi || spec.swagger).toString()
   };
 }
 
@@ -177,7 +192,9 @@ Choose another directory or remove contents.
 
   let { specFileName } = opts;
   if (!specFileName) {
-    specFileName = require.resolve('openapi-template');
+    specFileName = require.resolve(
+      opts.oasVersion.startsWith('3.') ? 'openapi-template/openapi.yaml' : 'openapi-template'
+    );
   }
 
   process.chdir(specRoot);
@@ -190,7 +207,11 @@ Choose another directory or remove contents.
   await copy('spec/README.md');
 
   if (opts.splitSpec) {
-    copyDirSync('spec/definitions');
+    if (opts.oasVersion.startsWith('3.')) {
+      copyDirSync('spec/components');
+    } else {
+      copyDirSync('spec/definitions');
+    }
     copyDirSync('spec/paths');
   }
 
@@ -210,7 +231,7 @@ Choose another directory or remove contents.
 
   console.log('Installing packages. This might take a couple of minutes.\n');
 
-  await installDeps('@^2.0.0-rc.2');
+  await installDeps('@^2.0.0-rc.3');
   console.log();
 
   try {
