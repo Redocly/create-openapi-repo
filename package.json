@@ -23,7 +23,7 @@
     "mkdirp": "^0.5.1",
     "openapi-template": "0.0.2",
     "slugify": "^1.3.3",
-    "swagger-repo": "^2.0.0-rc.3"
+    "swagger-repo": "^2.0.0-rc.6"
   },
   "devDependencies": {
     "eslint": "^5.9.0",

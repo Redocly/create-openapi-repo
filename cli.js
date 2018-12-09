@@ -234,7 +234,7 @@ Choose another directory or remove contents.
 
   console.log('Installing packages. This might take a couple of minutes.\n');
 
-  await installDeps('@^2.0.0-rc.3');
+  await installDeps('@^2.0.0-rc.6');
   console.log();
 
   try {
