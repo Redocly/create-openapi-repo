@@ -203,7 +203,7 @@ Choose another directory or remove contents.
   process.chdir(specRoot);
 
   console.log(`\nCreating a new OpenAPI repo in ${chalk.blue(path.resolve('.'))}\n`);
-  await copy('.gitignore');
+  await render('.gitignore', {});
   await copy('LICENSE');
   await render('package.json', data);
   await render('README.md', data);
