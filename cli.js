@@ -23,7 +23,7 @@ const {
 
 const { installDeps } = require('./lib/install-deps');
 
-const REDOCLY_RC = '.redoclyrc';
+const REDOCLY_RC = 'redocly.yaml';
 
 async function ask() {
   console.log('Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!');
