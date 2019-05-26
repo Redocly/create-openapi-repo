@@ -11,20 +11,21 @@
 </center>
 
 ## Why?
-There are a few advantages in hosting your API specification + docs on GitHub:
+There are a few advantages in hosting your API definition + docs on GitHub:
  - Community engagement (PR's and issues)
  - Hosting on GitHub pages (perfect uptime, CDN, Jekyll, custom domains with CNAME)
  - Advertisment in the GitHub community
  - Revision history, branching, CI
- - Fast on-boarding time (everyone knows how to use GitHub :smile:)
+ - Fast on-boarding time (developers and tech writers know how to use GitHub :smile:)
+ - Fully compatible with Redocly API Reference too
 
 ## Features
 This generator helps to create a GitHub repo with the following features:
- - Possibility to split a big OpenAPI spec into smaller files and bundle it for deployment
+ - Possibility to split a big OpenAPI definition into smaller files and bundle it for deployment
  - Continuous integration/deployment on Travis
  - Code samples as separate files
- - OpenAPI spec is validated after each commit
- - OpenAPI spec + ReDoc deployed to Github Pages (you can use a custom domain)
+ - OpenAPI definition is validated after each commit
+ - OpenAPI definition + ReDoc deployed to Github Pages (you can use a custom domain)
  - Live editing in your editor or `swagger-editor` :heart_eyes:
  ![live editing](./live-edit.gif)
 
