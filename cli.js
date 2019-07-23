@@ -23,7 +23,7 @@ const {
 
 const { installDeps } = require('./lib/install-deps');
 
-const REDOCLY_RC = '.redoclyrc';
+const REDOCLY_RC = 'redocly.yaml';
 
 async function ask() {
   console.log('Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!');
@@ -140,16 +140,16 @@ function printSuccess(opts, root) {
   console.log(
     `${chalk.green('Success!')} Created ${chalk.green(path.basename(root))} at ${chalk.blue(root)}
 Inside that directory, you can run several commands:
-  
+
   ${chalk.blue(`npm start`)}
     Starts the development server.
 
   ${chalk.blue(`npm run build`)}
-    Bundles the spec and prepares ${chalk.blue('web_deploy')} folder with static assets. 
+    Bundles the spec and prepares ${chalk.blue('web_deploy')} folder with static assets.
 
   ${chalk.blue(`npm test`)}
     Validates the spec.
-  
+
   ${chalk.blue(`npm run gh-pages`)}
     Deploys docs to GitHub Pages. You don't need to run it manually if you have Travis CI configured.
 
