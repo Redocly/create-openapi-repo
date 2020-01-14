@@ -10,78 +10,72 @@ const yaml = require('js-yaml');
 const slugify = require('slugify');
 const { execSync } = require('child_process');
 
-const swaggerRepo = require('swagger-repo');
+const argv = require('yargs-parser')(process.argv.slice(2));
 
 const {
   copy,
   copyDirSync,
+  copyDirToSync,
   render,
-  getGhPagesBaseUrl,
-  validateSpecFileName,
-  getCurrentGitHubRepo
+  // getGhPagesBaseUrl,
+  validateDefinitionFileName,
+  readYaml
+  // getCurrentGitHubRepo
 } = require('./lib/utils');
 
 const { installDeps } = require('./lib/install-deps');
 
-const REDOCLY_RC = 'redocly.yaml';
+const migrate = require('./lib/migrate-2-3');
+const splitDefinition = require('./lib/split-definition');
 
-async function ask() {
+const OLD_REDOCLY_RC = 'redocly.yaml';
+const REDOCLY_YAML = '.redocly.yaml';
+
+async function ask(openapiRoot, docsRoot) {
   console.log('Welcome to the ' + chalk.green('OpenAPI-Repo') + ' generator!');
 
-  const { haveSpec } = await prompt({
+  const { haveDefinition } = await prompt({
     type: 'confirm',
-    name: 'haveSpec',
-    message: 'Do you already have OpenAPI/Swagger spec for your API?',
+    name: 'haveDefinition',
+    message: 'Do you already have OpenAPI/Swagger 3.0 definition for your API?',
     default: false
   });
 
-  let specFileName;
-  let defaultSpecVersion;
-  if (haveSpec) {
-    specFileName = (await prompt({
-      type: 'input',
-      name: 'specFileName',
-      message: 'Please specify the path to the OpenAPI spec (local file):',
-      validate(fileName) {
-        return validateSpecFileName(fileName);
-      }
-    })).specFileName;
-  } else {
-    defaultSpecVersion =
-      (await prompt({
-        type: 'list',
-        choices: ['OpenAPI 3', 'OpenAPI 2'],
-        name: 'version',
-        message: 'Select OpenAPI version:',
+  let definitionFileName;
+  if (haveDefinition) {
+    definitionFileName = (
+      await prompt({
+        type: 'input',
+        name: 'definitionFileName',
+        message: 'Please specify the path to the OpenAPI definition (local file):',
         validate(fileName) {
-          return validateSpecFileName(fileName);
+          return validateDefinitionFileName(fileName);
         }
-      })).version === 'OpenAPI 3'
-        ? '3.0.0'
-        : '2.0';
+      })
+    ).definitionFileName;
   }
 
-  let spec;
-  if (haveSpec) {
-    spec = yaml.safeLoad(fs.readFileSync(specFileName, 'utf8'));
+  let openapi;
+  if (haveDefinition) {
+    openapi = yaml.safeLoad(fs.readFileSync(definitionFileName, 'utf8'));
   }
 
   const { apiTitle } = await prompt({
     type: 'input',
     name: 'apiTitle',
     message: 'API Name:',
-    default: haveSpec ? spec.title : undefined,
+    default: haveDefinition ? openapi.info && openapi.info.title : undefined,
     validate: i => (i.length > 0 ? true : `API Name can't be empty`)
   });
 
-  const { splitSpec } = await prompt({
-    type: 'confirm',
-    name: 'splitSpec',
-    message: `Split spec into separate files: paths/*, definitions/* ${chalk.yellow(
-      '[Experimental]'
-    )}?`,
-    default: true
-  });
+  // const { splitSpec } = await prompt({
+  //   type: 'confirm',
+  //   name: 'splitSpec',
+  //   message: `Split spec into separate files: paths/*, definitions/* ${chalk.yellow(
+  //     '[Experimental]'
+  //   )}?`,
+  //   default: true
+  // });
 
   const { codeSamples } = await prompt({
     type: 'confirm',
@@ -90,42 +84,55 @@ async function ask() {
     default: true
   });
 
-  const { swaggerUI } = await prompt({
-    type: 'confirm',
-    name: 'swaggerUI',
-    message: `Install SwaggerUI?`,
-    default: false
-  });
+  // const { swaggerUI } = await prompt({
+  //   type: 'confirm',
+  //   name: 'swaggerUI',
+  //   message: `Install SwaggerUI?`,
+  //   default: false
+  // });
 
-  const { travis } = await prompt({
+  // const { travis } = await prompt({
+  //   type: 'confirm',
+  //   name: 'travis',
+  //   message: `Set up Travis CI?`,
+  //   default: true
+  // });
+
+  let repo;
+  // if (travis) {
+  //   repo = (await prompt({
+  //     type: 'input',
+  //     name: 'repo',
+  //     message: `Specify name of GitHub repo in format ${chalk.blue('User/Repo')}:`,
+  //     default: getCurrentGitHubRepo,
+  //     validate: function(input) {
+  //       return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
+  //     }
+  //   })).repo;
+  // }
+
+  const { proceed } = await prompt({
     type: 'confirm',
-    name: 'travis',
-    message: `Set up Travis CI?`,
+    name: 'proceed',
+    message:
+      `The following folders will be created: ${chalk.blue(openapiRoot)} and ${chalk.blue(
+        docsRoot
+      )}\n` +
+      `You can change them by running ${chalk.blue(
+        'create-openapi-repo <openapiDir> <docsDir>'
+      )}\nProceed?`,
     default: true
   });
 
-  let repo;
-  if (travis) {
-    repo = (await prompt({
-      type: 'input',
-      name: 'repo',
-      message: `Specify name of GitHub repo in format ${chalk.blue('User/Repo')}:`,
-      default: getCurrentGitHubRepo,
-      validate: function(input) {
-        return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
-      }
-    })).repo;
-  }
-
   return {
-    specFileName,
+    definitionFileName,
     apiTitle,
-    splitSpec,
+    // splitSpec,
     codeSamples,
-    swaggerUI,
-    travis,
+    // swaggerUI,
+    // travis,
     repo,
-    oasVersion: (defaultSpecVersion || spec.openapi || spec.swagger).toString()
+    proceed
   };
 }
 
@@ -138,103 +145,102 @@ function printSuccess(opts, root) {
   }
 
   console.log(
-    `${chalk.green('Success!')} Created ${chalk.green(path.basename(root))} at ${chalk.blue(root)}
-Inside that directory, you can run several commands:
+    `\n\n${chalk.green('Success!')} Created ${chalk.green(path.basename(root))} folder.
+You can run several commands:
 
   ${chalk.blue(`npm start`)}
     Starts the development server.
 
   ${chalk.blue(`npm run build`)}
-    Bundles the spec and prepares ${chalk.blue('web_deploy')} folder with static assets.
+    Bundles the definition.
 
   ${chalk.blue(`npm test`)}
-    Validates the spec.
-
-  ${chalk.blue(`npm run gh-pages`)}
-    Deploys docs to GitHub Pages. You don't need to run it manually if you have Travis CI configured.
+    Validates the definition.
 
 We suggest that you begin by typing:
 
-  ${chalk.blue('cd')} ${path.basename(root)}
   ${chalk.blue('npm start')}` + (travisNote ? '\n\n' + travisNote : '')
   );
 }
 
 async function run() {
-  const specRoot = process.argv[2];
-
-  if (!specRoot) {
-    console.log(`Please specify the spec directory:
-  ${chalk.blue('create-openapi-repo')} <spec-directory>
-
-For example:
-  ${chalk.blue('create-openapi-repo')} test-api-repo`);
-
-    process.exit(1);
+  if (argv.migrate23) {
+    await migrate();
+    return;
+  }
+  if (argv.version) {
+    console.log(require('./package.json').version);
+    return;
   }
 
-  if (fs.existsSync(specRoot) && fs.existsSync(path.join(specRoot, REDOCLY_RC))) {
-    console.log(`The directory ${chalk.green(specRoot)} already contains ${chalk.green(REDOCLY_RC)}
+  const openapiRoot = argv._[0] || 'openapi';
+  const docsRoot = argv._[1] || 'docs';
+
+  if (fs.existsSync(path.join(OLD_REDOCLY_RC))) {
+    console.log(`The current directory already contains ${chalk.green(OLD_REDOCLY_RC)}
 
 Choose another directory or remove contents.
 `);
     process.exit(1);
   }
 
-  if (!fs.existsSync(specRoot)) {
-    fs.mkdirSync(specRoot);
+  if (fs.existsSync(path.join(REDOCLY_YAML))) {
+    console.log(`The current directory already contains ${chalk.green(REDOCLY_YAML)}
+
+Choose another directory or remove contents.
+`);
+    process.exit(1);
   }
 
-  const opts = await ask();
+  const opts = await ask(openapiRoot, docsRoot);
+
+  if (!opts.proceed) {
+    return;
+  }
+
+  if (!fs.existsSync(openapiRoot)) {
+    fs.mkdirSync(openapiRoot);
+  }
 
   const data = {
     ...opts,
-    packageName: slugify(opts.apiTitle).toLowerCase(),
-    ghPagesBaseUrl: opts.repo ? getGhPagesBaseUrl(opts.repo) : undefined
+    packageName: slugify(opts.apiTitle).toLowerCase()
+    // ghPagesBaseUrl: opts.repo ? getGhPagesBaseUrl(opts.repo) : undefined
   };
 
-  let { specFileName } = opts;
-  if (!specFileName) {
-    specFileName = require.resolve(
-      opts.oasVersion.startsWith('3.') ? 'openapi-template/openapi.yaml' : 'openapi-template'
-    );
+  let { definitionFileName } = opts;
+  if (!definitionFileName) {
+    definitionFileName = require.resolve('openapi-template/openapi.yaml');
   }
 
-  process.chdir(specRoot);
-
   console.log(`\nCreating a new OpenAPI repo in ${chalk.blue(path.resolve('.'))}\n`);
+
   await render('.gitignore', {});
   await copy('LICENSE');
   await render('package.json', data);
   await render('README.md', data);
-  await copy('spec/README.md');
+  await copy('openapi/README.md', openapiRoot);
 
-  if (opts.splitSpec) {
-    if (opts.oasVersion.startsWith('3.')) {
-      copyDirSync('spec/components');
-    } else {
-      copyDirSync('spec/definitions');
-    }
-    copyDirSync('spec/paths');
-  }
+  await render('.redocly.yaml', { mainDefinitionFile: path.join(openapiRoot, 'openapi.yaml') });
+
+  copyDirSync('openapi/components', openapiRoot);
+  copyDirSync('openapi/paths', openapiRoot);
 
   if (opts.codeSamples) {
-    copyDirSync('spec/code_samples');
+    copyDirSync('openapi/code_samples', openapiRoot);
   }
 
-  if (opts.travis) {
-    await copy('.travis.yml');
-  }
+  // if (opts.travis) {
+  //   await copy('.travis.yml');
+  // }
 
-  copyDirSync('web');
+  copyDirToSync('docs', docsRoot);
 
-  swaggerRepo.syncWithSpec(fs.readFileSync(specFileName).toString());
-
-  fs.writeFileSync(REDOCLY_RC, yaml.safeDump(opts, { skipInvalid: true }));
+  splitDefinition(readYaml(definitionFileName), openapiRoot);
 
   console.log('Installing packages. This might take a couple of minutes.\n');
 
-  await installDeps('@^2.0.0-rc.6');
+  await installDeps();
   console.log();
 
   try {
@@ -244,7 +250,7 @@ Choose another directory or remove contents.
     // skip error
   }
 
-  printSuccess(opts, path.resolve('.'));
+  printSuccess(opts, openapiRoot);
 }
 
 try {
