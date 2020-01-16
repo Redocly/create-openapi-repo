@@ -108,7 +108,7 @@ npx create-openapi-repo <api-definition-root>
 - [Create a GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI definition will live.
 - [Clone your repo](https://help.github.com/articles/cloning-a-repository/) and execute the following command inside it:
 ```bash
-create-openapi-repo .
+npx create-openapi-repo
 ```
 -  Commit and push your changes to the GitHub repo and follow instruction in the `README.md` of your newly created repo.
 
