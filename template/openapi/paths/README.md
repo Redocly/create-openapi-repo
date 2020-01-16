@@ -1,5 +1,5 @@
 Paths
 =====
 
-* Write each path specification in separate file
-* Filename is mapped to path by replacing `@` with `/`, i.e. `user@{username}.yaml` matches to `user/{username}` path
+* Write each path definition in separate file.
+* The filename is mapped to a path by replacing `@` with `/`, e.g. `user@{username}.yaml` matches the `user/{username}` path.
