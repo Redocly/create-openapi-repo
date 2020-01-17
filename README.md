@@ -79,7 +79,7 @@ The `openapi` folder is where your OpenAPI definition will live.  Inside there, 
 
 The `components` folder is where you will organize sub-folders such as `schema` to define your schema.
 
-The `paths` folder is where you will organize your paths.  There will be a README.md file in there with suggestions for how to organize it. into specially named files (or folders) that use an `@` in place of a `/` (because files cannot have a `/` character in them).  You will also be able to use path parameters by wrapping them in curly braces `{example}`.
+The `paths` folder is where you will organize your paths. There will be a 'README.md' file in there with suggestions for how to organize it into specially named files (or folders) that use an `@` in place of a `/` (because files cannot have a `/` character in them).  You will also be able to use path parameters by wrapping them in curly braces `{example}`.
 
 ## Commands
 
@@ -107,9 +107,9 @@ We'll use `npx` in this example.  However, remove `npx` if you installed it glob
 npx create-openapi-repo
 ```
 
-You will be presented with some questions.  You can create a new definition or use an existing definition to initialize your project.
+You will be presented with some questions. You can create a new definition or use an existing definition to initialize your project.
 
-Please note, if you do start a new one, remember t [create a GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI definition will live.
+Please note, if you do start a new one, remember to [create a GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI definition will live.
 
 If you use the prior version of this generated repository, please read the following upgrade instructions.
 
@@ -123,11 +123,11 @@ Run this in the root folder of your repo.
 npx create-openapi-repo --migrate-2-3
 ```
 
-Note: the migration tool does not migrate plugins automatically.  You would need to manually add them to the `transformers` folder. 
+Note: the migration tool does not migrate plugins automatically. You would need to manually add them to the `transformers` folder. 
 
 ## Support
 
-Thank you for wanting to support us.  Here are some ideas how to support us:
+Thank you for wanting to support us. Here are some ideas how to support us:
 
 * Star us
 * Tell a friend or colleague about us (or Tweet about us)
