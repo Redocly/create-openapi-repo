@@ -73,11 +73,13 @@ You will have a structure similar to this:
     └── package.json
 ```
 
+However, you can adjust it to any structure you prefer.
+
 The `openapi` folder is where your OpenAPI definition will live.  Inside there, and the sub-folders, there are `README.md` files to help guide you further. This is also where your entrypoint `openapi.yaml` will live.
 
 The `components` folder is where you will organize sub-folders such as `schema` to define your schema.
 
-The `paths` folder is where you will organize your paths into specially named files (or folders) that use an `@` in place of a `/` (because files cannot have a `/` character in them).  You will also be able to use path parameters by wrapping them in curly braces `{example}`.
+The `paths` folder is where you will organize your paths.  There will be a README.md file in there with suggestions for how to organize it. into specially named files (or folders) that use an `@` in place of a `/` (because files cannot have a `/` character in them).  You will also be able to use path parameters by wrapping them in curly braces `{example}`.
 
 ## Commands
 
@@ -99,38 +101,29 @@ npm install -g create-openapi-repo
 ```
 or use [`npx`](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b):
 
-```bash
-npx create-openapi-repo <api-definition-root>
-```
-
-### Starting without any OpenAPI definition
-
-- [Create a GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI definition will live.
-- [Clone your repo](https://help.github.com/articles/cloning-a-repository/) and execute the following command inside it:
-```bash
-create-openapi-repo .
-```
--  Commit and push your changes to the GitHub repo and follow instruction in the `README.md` of your newly created repo.
-
-### Starting with an OpenAPI definition
+We'll use `npx` in this example.  However, remove `npx` if you installed it globally.
 
 ```bash
-npx create-openapi-repo <api-definition-root>
+npx create-openapi-repo
 ```
 
-If you use the prior version of this generated repository, please read the following instructions.
+You will be presented with some questions.  You can create a new definition or use an existing definition to initialize your project.
+
+Please note, if you do start a new one, remember t [create a GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) where your OpenAPI definition will live.
+
+If you use the prior version of this generated repository, please read the following upgrade instructions.
 
 #### Upgrading from a prior version
 
-You can migrate your repository from a previous structure of OpenAPI repo to this newer structure by using our migration tool. 
+Migrate your repository from a previous structure of OpenAPI repo to this newer structure with our migration tool. 
 
 Run this in the root folder of your repo.
 
 ```bash
-npx create-openapi-repo@next --migrate-2-3
+npx create-openapi-repo --migrate-2-3
 ```
 
-Note: the migration tool does not migrate plugins autoamtically.  You would need to manually add them to the `transformers` folder. 
+Note: the migration tool does not migrate plugins automatically.  You would need to manually add them to the `transformers` folder. 
 
 ## Support
 
