@@ -51,6 +51,7 @@ This generator helps to create a GitHub repo with the following features:
 
 You will have a structure similar to this:
 ```
+    ├── .redocly.yaml
     ├── LICENSE
     ├── README.md
     ├── docs
@@ -80,6 +81,8 @@ The `openapi` folder is where your OpenAPI definition will live.  Inside there, 
 The `components` folder is where you will organize sub-folders such as `schema` to define your schema.
 
 The `paths` folder is where you will organize your paths. There will be a 'README.md' file in there with suggestions for how to organize it into specially named files (or folders) that use an `@` in place of a `/` (because files cannot have a `/` character in them).  You will also be able to use path parameters by wrapping them in curly braces `{example}`.
+
+The `.redocly.yaml` file is a universal configuration for various Redocly tools including the lint tool and reference doc engine.
 
 ## Commands
 
