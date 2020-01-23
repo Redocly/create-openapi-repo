@@ -37,7 +37,7 @@ async function ask(openapiRoot, docsRoot) {
   const { haveDefinition } = await prompt({
     type: 'confirm',
     name: 'haveDefinition',
-    message: 'Do you already have OpenAPI/Swagger 3.0 definition for your API?',
+    message: 'Do you already have an OpenAPI/Swagger 3.0 definition for your API?',
     default: false
   });
 
