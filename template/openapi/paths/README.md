@@ -102,4 +102,4 @@ file: /paths/customers/{id}/timeline/{messageId}/get.yaml
         $ref: ../../../../../components/headers/Rate-Limit-Remaining.yaml
 
 ```
-Notice the `../../../../../` in the ref which requires some attention to formulate correctly.  While openapi-cli has a linter which suggests possible refs when there is a mistake made, this is a drawback for APIs with deep paths.
+Notice the `../../../../../` in the ref which requires some attention to formulate correctly.  While openapi-cli has a linter which suggests possible refs when there is a mistake, this is still a net drawback for APIs with deep paths.
