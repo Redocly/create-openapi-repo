@@ -17,10 +17,8 @@ const {
   copyDirSync,
   copyDirToSync,
   render,
-  // getGhPagesBaseUrl,
   validateDefinitionFileName,
   readYaml
-  // getCurrentGitHubRepo
 } = require('./lib/utils');
 
 const { installDeps } = require('./lib/install-deps');
@@ -68,15 +66,6 @@ async function ask(openapiRoot, docsRoot) {
     validate: i => (i.length > 0 ? true : `API Name can't be empty`)
   });
 
-  // const { splitSpec } = await prompt({
-  //   type: 'confirm',
-  //   name: 'splitSpec',
-  //   message: `Split spec into separate files: paths/*, definitions/* ${chalk.yellow(
-  //     '[Experimental]'
-  //   )}?`,
-  //   default: true
-  // });
-
   const { codeSamples } = await prompt({
     type: 'confirm',
     name: 'codeSamples',
@@ -84,32 +73,8 @@ async function ask(openapiRoot, docsRoot) {
     default: true
   });
 
-  // const { swaggerUI } = await prompt({
-  //   type: 'confirm',
-  //   name: 'swaggerUI',
-  //   message: `Install SwaggerUI?`,
-  //   default: false
-  // });
-
-  // const { travis } = await prompt({
-  //   type: 'confirm',
-  //   name: 'travis',
-  //   message: `Set up Travis CI?`,
-  //   default: true
-  // });
 
   let repo;
-  // if (travis) {
-  //   repo = (await prompt({
-  //     type: 'input',
-  //     name: 'repo',
-  //     message: `Specify name of GitHub repo in format ${chalk.blue('User/Repo')}:`,
-  //     default: getCurrentGitHubRepo,
-  //     validate: function(input) {
-  //       return input.indexOf('/') > 0 ? true : 'Repo Name must contain "/"';
-  //     }
-  //   })).repo;
-  // }
 
   const { proceed } = await prompt({
     type: 'confirm',
@@ -127,10 +92,7 @@ async function ask(openapiRoot, docsRoot) {
   return {
     definitionFileName,
     apiTitle,
-    // splitSpec,
     codeSamples,
-    // swaggerUI,
-    // travis,
     repo,
     proceed
   };
@@ -205,7 +167,6 @@ Choose another directory or remove contents.
   const data = {
     ...opts,
     packageName: slugify(opts.apiTitle).toLowerCase()
-    // ghPagesBaseUrl: opts.repo ? getGhPagesBaseUrl(opts.repo) : undefined
   };
 
   let { definitionFileName } = opts;
@@ -229,10 +190,6 @@ Choose another directory or remove contents.
   if (opts.codeSamples) {
     copyDirSync('openapi/code_samples', openapiRoot);
   }
-
-  // if (opts.travis) {
-  //   await copy('.travis.yml');
-  // }
 
   copyDirToSync('docs', docsRoot);
 
