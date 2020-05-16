@@ -66,13 +66,14 @@ async function ask(openapiRoot, docsRoot) {
     validate: i => (i.length > 0 ? true : `API Name can't be empty`)
   });
 
-  const { codeSamples } = haveDefinition ? { codeSamples: false } : await prompt({
-    type: 'confirm',
-    name: 'codeSamples',
-    message: `Prepare manual code samples folder?`,
-    default: true
-  });
-
+  const { codeSamples } = haveDefinition
+    ? { codeSamples: false }
+    : await prompt({
+        type: 'confirm',
+        name: 'codeSamples',
+        message: `Prepare manual code samples folder?`,
+        default: true
+      });
 
   let repo;
 
