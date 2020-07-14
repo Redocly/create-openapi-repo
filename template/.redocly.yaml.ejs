@@ -1,7 +1,9 @@
-# See https://docs.redoc.ly/cli/configuration/ for more information.
+# See https://redoc.ly/docs/cli/configuration/ for more information.
 apiDefinitions:
   main: <%= mainDefinitionFile %>
 lint:
+  extends:
+    - recommended
   rules:
     no-unused-components: warning
 referenceDocs:
