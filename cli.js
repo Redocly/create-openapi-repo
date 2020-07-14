@@ -183,7 +183,7 @@ Choose another directory or remove contents.
   await render('README.md', data);
   await copy('openapi/README.md', openapiRoot);
 
-  await render('.redocly.yaml', { mainDefinitionFile: path.join(openapiRoot, 'openapi.yaml') });
+  await render('.redocly.yaml', { mainDefinitionFile: path.posix.join(openapiRoot, 'openapi.yaml') });
 
   copyDirSync('openapi/components', openapiRoot);
   copyDirSync('openapi/paths', openapiRoot);
