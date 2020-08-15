@@ -16,14 +16,14 @@ Need to write or contribute to an OpenAPI definition? `create-openapi-repo` can 
  - Split an existing OpenAPI definition into multiple files
  - Bundle a multi-file definition into a single file
  - Validate your OpenAPI definition using our free [openapi-cli tool](https://github.com/redocly/openapi-cli)
- - Automate deployment of your OpenAPI definition/docs using CI/CD workflows
+ - Automate deployment of your API reference docs using CI/CD workflows
  - Maintain code samples as separate files
  - Live editing in your editor of choice :heart_eyes:
 
 ## Examples
-- https://github.com/Rebilly/RebillyAPI
-- https://github.com/thingful/openapi-spec
-- https://github.com/TwineHealth/TwineDeveloperDocs
+- [Rebilly](https://github.com/Rebilly/RebillyAPI)
+- [Thingful](https://github.com/thingful/openapi-spec)
+- [Fitbit Plus](https://github.com/TwineHealth/TwineDeveloperDocs)
 
 ## Prerequisites
 
