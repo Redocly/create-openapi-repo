@@ -8,7 +8,9 @@ A tool for generating multi-file OpenAPI definitions.
 <img src="./logo.png" width="500px"/>
 </p>
 
-## Table of content
+Need to write or contribute to an OpenAPI definition? `create-openapi-repo` can help you structure your OpenAPI repository using a multi-file [directory structure](https://github.com/Redocly/create-openapi-repo#directory-structure).
+
+## Table of contents
 
 - [Features](#features)
 - [Examples](#examples)
