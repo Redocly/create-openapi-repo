@@ -52,7 +52,7 @@ Before you begin, make sure you’ve installed the following prerequisites:
 
 ### Upgrading from a prior version
 
-To upgrade from a previous version of `create-openapi-repo`, run the following command in the root folder of your repository:
+To upgrade from a prior version of `create-openapi-repo`, run the following command in the root folder of your repository:
 
 ```bash
 npx create-openapi-repo --migrate-2-3
@@ -62,15 +62,15 @@ npx create-openapi-repo --migrate-2-3
 
 ## Usage
 
-`create-openapi-repo` provides interactive prompts to help guide you through the installation process. The following workflows are supported:
+`create-openapi-repo` provides interactive prompts to help guide you through the installation process. Two basic workflows are supported:
 
 ### Split an existing OpenAPI definition
 
-Split an existing OpenAPI definition file into multiple files. The interactive prompts allow you to specify the path to the file on your local machine, as well as rename the API (optional). After you choose to proceed, `create-openapi-repo` initializes the repository and splits your OpenAPI definition into multiple files.
+The interactive prompts allow you to specify the path to the file on your local machine, as well as rename the API (optional). After you choose to proceed, `create-openapi-repo` initializes the repository and splits your OpenAPI definition into multiple files.
 
 ### Create a new OpenAPI definition
 
-Create a new directory structure for a new OpenAPI definition. The interactive prompts allow you to specify a name for the API and choose whether to create a sub-folder for code sample files. After you choose to proceed, `create-openapi-repo` initializes the repository and populates it with placeholder files and folders. 
+The interactive prompts allow you to specify a name for the API and choose whether to create a sub-folder for code sample files. After you choose to proceed, `create-openapi-repo` initializes the repository and populates it with placeholder files and folders. 
 
 ## Directory structure
 
