@@ -8,25 +8,17 @@ A tool for generating multi-file OpenAPI definitions.
 <img src="./logo.png" width="500px"/>
 </p>
 
-Need to write or contribute to an OpenAPI definition? `create-openapi-repo` can help you structure your OpenAPI repository using a multi-file [directory structure](https://github.com/Redocly/create-openapi-repo#directory-structure).
+Need to write or contribute to an OpenAPI definition? `create-openapi-repo` can help you structure your OpenAPI repository into a multi-file [directory structure](https://github.com/Redocly/create-openapi-repo#directory-structure).
 
-## Table of contents
+ - Structure your OpenAPI repository using a multi-file [directory structure](https://github.com/Redocly/create-openapi-repo#directory-structure). This makes it easier to navigate and maintain your OpenAPI definition.
+ - Author content using your favorite text editor.
+ - Maintain your OpenAPI definition using source control (such as Github).
+ - Continuously validate it using our free [openapi-cli tool](https://github.com/redocly/openapi-cli).
 
-- [Features](#features)
-- [Examples](#examples)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-    - [Split an existing OpenAPI definition](#split-an-existing-openapi-definition)
-    - [Create a new OpenAPi definition](#create-a-new-openapi-definition)
-- [Directory structure](#directory-structure)
-- [Commands](#commands)
-- [Contribute](#contribute)
-
-## Features
+## Additional Features
 
  - OpenAPI 3.0 support
- - Split an OpenAPI definition into multiple files
+ - Split an existing OpenAPI definition into multiple files
  - Bundle a multi-file definition into a single file
  - Validate your OpenAPI definition after each commit
  - Automate deployment of your OpenAPI definition/docs using CI/CD workflows
