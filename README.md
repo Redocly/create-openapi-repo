@@ -126,7 +126,7 @@ Interested in contributing to this project? Here are some ways you can support u
  - Star us on Github.
  - Tell a friend or colleague about us (or Tweet about us).
  - Write an article or blog post. Let us know by opening an issue with a link to the article.
- - Looking to build a modern documentation workflow? Our commercial products can help you maintain and deploy API reference docs and developer portals. For more information, see our [website](https://redoc.ly).
+ - Looking to build a modern documentation workflow? Our [commercial products](https://redoc.ly) can help you maintain and deploy API reference docs and developer portals.
 
 [npm-image]: https://badge.fury.io/js/generator-openapi-repo.svg
 [npm-url]: https://npmjs.org/package/generator-openapi-repo
