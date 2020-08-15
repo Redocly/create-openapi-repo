@@ -8,6 +8,19 @@ A tool for generating multi-file OpenAPI definitions.
 <img src="./logo.png" width="500px"/>
 </p>
 
+## Table of content
+
+- [Features](#features)
+- [Examples](#examples)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Split an existing OpenAPI definition](#split-an-existing-openapi-definition)
+    - [Create a new OpenAPi definition](#create-a-new-openapi-definition)
+- [Directory structure](#directory-structure)
+- [Commands](#commands)
+- [Contribute](#contribute)
+
 ## Features
 
  - OpenAPI 3.0 support
