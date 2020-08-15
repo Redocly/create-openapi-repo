@@ -10,11 +10,12 @@ A tool for generating multi-file OpenAPI definitions.
 
 ## Features
 
- - Split an OpenAPI definition into multiple files.
- - Bundle a multi-file definition into a single file.
- - Validate your OpenAPI definition after each commit.
- - Automate deployment of your OpenAPI definition/docs using CI/CD workflows.
- - Maintain code samples as separate files.
+ - OpenAPI 3.0 support
+ - Split an OpenAPI definition into multiple files
+ - Bundle a multi-file definition into a single file
+ - Validate your OpenAPI definition after each commit
+ - Automate deployment of your OpenAPI definition/docs using CI/CD workflows
+ - Maintain code samples as separate files
  - Live editing in your editor of choice :heart_eyes:
 
 ## Examples
@@ -59,18 +60,15 @@ npx create-openapi-repo --migrate-2-3
 
 ## Usage
 
-`create-openapi-repo` provides interactive prompts to help guide you through the installation process. Two basic workflows are supported:
-
- - Split an existing OpenAPI definition into multiple files
- - Create a new OpenAPI definition
+`create-openapi-repo` provides interactive prompts to help guide you through the installation process. The following workflows are supported:
 
 ### Split an existing OpenAPI definition
 
-If you have an existing OpenAPI definition, the interactive prompts will allow you to specify the path to the file on your local machine and give you the option to rename the API (if desired). Once you've chosen to proceed, `create-openapi-repo` will initialize the repository and split your OpenAPI definition into multiple files.
+Split an existing OpenAPI definition file into multiple files. The interactive prompts allow you to specify the path to the file on your local machine, as well as rename the API (optional). After you choose to proceed, `create-openapi-repo` initializes the repository and splits your OpenAPI definition into multiple files.
 
 ### Create a new OpenAPI definition
 
-If you're creating a new OpenAPI definition, follow the prompts to create a new directory. You'll have the option to specify a name for the API and choose whether to create a folder for code samples. `create-openapi-repo` will create the directory structure with placeholder files and folders.
+Create a new directory structure for a new OpenAPI definition. The interactive prompts allow you to specify a name for the API and choose whether to create a sub-folder for code sample files. After you choose to proceed, `create-openapi-repo` initializes the repository and populates it with placeholder files and folders. 
 
 ## Directory structure
 
