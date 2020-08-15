@@ -45,7 +45,7 @@ Before you begin, make sure you’ve installed the following prerequisites:
         npx create-openapi-repo
         ```
 
-3. Answer the [questions](https://github.com/Redocly/create-openapi-repo#usage) to complete the installation process.
+3. Follow the [interactive prompts](https://github.com/Redocly/create-openapi-repo#usage) to complete the installation.
 
 ### Upgrading from a prior version
 
@@ -59,20 +59,20 @@ npx create-openapi-repo --migrate-2-3
 
 ## Usage
 
-`create-openapi-repo` includes interactive prompts to help guide you through the installation process. Two workflows are supported:
+`create-openapi-repo` provides interactive prompts to help guide you through the installation process. Two basic workflows are supported:
 
  - Split an existing OpenAPI definition into multiple files
  - Create a new OpenAPI definition
 
 ### Split an existing OpenAPI definition
 
-placeholder text
+If you have an existing OpenAPI definition, the interactive prompts will allow you to specify the path to the file on your local machine and give you the option to rename the API (if desired). Once you've chosen to proceed, `create-openapi-repo` will initialize the repository and split your OpenAPI definition into multiple files.
 
 ### Create a new OpenAPI definition
 
-placeholder text
+If you're creating a new OpenAPI definition, follow the prompts to create a new directory. You'll have the option to specify a name for the API and choose whether to create a folder for code samples. `create-openapi-repo` will create the directory structure with placeholder files and folders.
 
-## Structure
+## Directory structure
 
 The directory structure will look similar to this:
 
@@ -120,13 +120,13 @@ The generated repository installs a dependency for our `openapi-cli` tool which 
 
 ## Contribute
 
-Thank you for wanting to support us. Here are some ideas how to support us:
+Interested in contributing to this project? Here are some ways you can support us:
 
  - Submit a pull request.
  - Star us on Github.
  - Tell a friend or colleague about us (or Tweet about us).
  - Write an article or blog post. Let us know by opening an issue with a link to the article.
- - Looking to build a modern documentation workflow? Our commercial products can help you maintain and deploy your API documentation. For more information, see our [website](https://redoc.ly).
+ - Looking to build a modern documentation workflow? Our commercial products can help you maintain and deploy API reference docs and developer portals. For more information, see our [website](https://redoc.ly).
 
 [npm-image]: https://badge.fury.io/js/generator-openapi-repo.svg
 [npm-url]: https://npmjs.org/package/generator-openapi-repo
