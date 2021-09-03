@@ -1,6 +1,6 @@
 # create-openapi-repo
 
-[![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url] 
 
 > Generate an organized multi-file OpenAPI repository.
 
