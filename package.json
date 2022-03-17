@@ -1,6 +1,6 @@
 {
   "name": "create-openapi-repo",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "description": "Generator of OpenAPI repository",
   "author": {
     "name": "Roman Hotsiy",
