@@ -16,7 +16,7 @@
   "dependencies": {
     "chalk": "^2.3.1",
     "cross-spawn": "^6.0.5",
-    "ejs": "^2.6.1",
+    "ejs": "^3.1.7",
     "inquirer": "^6.2.1",
     "js-yaml": "^3.13.1",
     "lodash.isequal": "^4.5.0",
