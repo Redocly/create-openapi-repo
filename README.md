@@ -23,11 +23,10 @@ Need to write or contribute to an OpenAPI definition? `create-openapi-repo` can 
 ## Examples
 - [Rebilly](https://github.com/Rebilly/RebillyAPI)
 - [Thingful](https://github.com/thingful/openapi-spec)
-- [Fitbit Plus](https://github.com/TwineHealth/TwineDeveloperDocs)
 
 ## Prerequisites
 
-Before you begin, make sure you’ve installed the following prerequisites:
+Before you begin, make sure you have the following prerequisites:
 
  - [Node.js](https://nodejs.org/)
  - [Github repository](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) (new OpenAPI definitions only)
@@ -110,7 +109,7 @@ The directory structure will look similar to this:
 
 ## Commands
 
-The generated repository installs a dependency for our `openapi-cli` tool which supports the following commands:
+The generated repository installs a dependency for our `redocly-cli` tool which supports the following commands:
 
  - `npm start`: Starts the preview server
  - `npm run build`: Bundles a multi-file OpenAPI definition into a single file
