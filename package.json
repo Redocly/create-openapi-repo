@@ -29,6 +29,9 @@
     "eslint": "^5.16.0",
     "prettier": "^1.19.1"
   },
+  "overrides": {
+    "tmp": ">=0.2.4"
+  },
   "repository": "Redocly/create-openapi-repo",
   "scripts": {
     "lint": "eslint .",
