@@ -30,7 +30,8 @@
     "prettier": "^1.19.1"
   },
   "overrides": {
-    "tmp": ">=0.2.4"
+    "tmp": ">=0.2.4",
+    "lodash": ">=4.17.23"
   },
   "repository": "Redocly/create-openapi-repo",
   "scripts": {
