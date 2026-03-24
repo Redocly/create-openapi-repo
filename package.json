@@ -31,7 +31,9 @@
   },
   "overrides": {
     "tmp": ">=0.2.4",
-    "lodash": ">=4.17.23"
+    "lodash": ">=4.17.23",
+    "minimatch@<3.1.4": "3.1.5",
+    "minimatch@<5.1.7": "5.1.8"
   },
   "repository": "Redocly/create-openapi-repo",
   "scripts": {
